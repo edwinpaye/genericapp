@@ -1,0 +1,7 @@
+
+<div>
+    <h3>Select a Step:</h3>
+    <div *ngFor="let step of steps">
+        <button (click)="selectStep(step.index)">{{ step.name }}</button>
+    </div>
+</div>
