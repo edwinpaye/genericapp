@@ -1,0 +1,11 @@
+<div class="toolbar">
+    <div class="toolbar-content" *ngFor="let item of items">
+      <div class="animated-button" (click)="selectItem(item.content)" disabled>
+        <div class="component-btn">
+          <span >{{ item.label }}</span>
+          <span></span>
+        </div>
+        <button class="exit-btn" (click)="closeComponent($event)">X</button>
+      </div>
+    </div>
+</div>

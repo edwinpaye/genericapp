@@ -1,0 +1,22 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngFor="let field of fields">
+        <label>{{ field.label }}</label>
+
+        <input *ngIf="field.type === 'text'" [formControlName]="field.name" type="text">
+
+        <select *ngIf="field.type === 'select'" [formControlName]="field.name">
+            <option *ngFor="let option of field.options">{{ option }}</option>
+        </select>
+
+        <div *ngIf="field.type === 'radio'">
+            <label *ngFor="let option of field.options">
+                <input type="radio" [formControlName]="field.name" [value]="option">
+                {{ option }}
+            </label>
+        </div>
+
+      <!-- Add other input types as needed -->
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
