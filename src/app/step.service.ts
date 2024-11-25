@@ -62,14 +62,20 @@ export class StepService {
   //   }  
   // }  
 
-  removeStep(index: number): void {
-    if(this.selectedStepsList.length > index && this.selectedStepsList.length > 1) {
-      this.selectedStepsList.splice(index, 1);
+  removeStep(id: number): void {
+    if(this.selectedStepsList.length > 1) {
+      const index = this.selectedStepsList.findIndex((item) => item.id === id);
 
-      // if (this.currentStep >= this.steps.length) {
-      //   this.currentStep = this.steps.length - 1;
-      // }
-      this.stepListSubject.next(this.selectedStepsList);
+      if (index !== -1) {
+        const stepItem = this.currentStepSubject.getValue();
+
+        if (stepItem.id === id) {
+          const previusStep = this.selectedStepsList[(index - 1 + this.selectedStepsList.length) % this.selectedStepsList.length];
+          this.selectStep(previusStep.id);
+        }
+        this.selectedStepsList = this.selectedStepsList.filter((item) => item.id !== id);
+        this.stepListSubject.next(this.selectedStepsList);
+      }
     }
   }
 

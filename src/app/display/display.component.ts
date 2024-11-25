@@ -1,18 +1,33 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DynamicFormField } from '../dynamic-form/dynamicFormField';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { TableColumn } from '../dynamic-table/tableColumn';
 import { DynamicTableComponent } from '../dynamic-table/dynamic-table.component';
+import { StepItem, StepService } from '../step.service';
+import { Observable } from 'rxjs';
+import { CommonModule, NgComponentOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-display',
   standalone: true,
-  imports: [DynamicFormComponent, DynamicTableComponent],
+  imports: [
+    CommonModule,
+    NgComponentOutlet,
+    DynamicFormComponent,
+    DynamicTableComponent,
+  ],
   templateUrl: './display.component.html',
   styleUrl: './display.component.css'
 })
-export class DisplayComponent {
+export class DisplayComponent implements OnInit{
   @Input() content: string = '';
+  currentStep$!: Observable<StepItem>;
+
+  constructor(public stepService: StepService) {}
+
+  ngOnInit(): void {
+    this.currentStep$ = this.stepService.currentStep$;
+  }
 
   fields: DynamicFormField[] = [
     { type: 'text', label: 'First Name', name: 'firstName' },

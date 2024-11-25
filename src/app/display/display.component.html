@@ -3,4 +3,7 @@
     <p>{{ content }}</p>
     <app-dynamic-form [fields]="fields"></app-dynamic-form>
     <app-dynamic-table [columns]="columns" [data]="data"></app-dynamic-table>
+    <div *ngIf="currentStep$ | async as stepItem">
+        <ng-container *ngComponentOutlet="stepItem.component"></ng-container>
+    </div>
 </div>
