@@ -12,7 +12,7 @@
 
     <h4>Steps Lists:</h4>
     <ul>
-        <li *ngFor="let step of stepService.stepsList; let i = index">
+        <li *ngFor="let step of stepService.getSteps(); let i = index">
             <button (click)="addStep(i)">Step {{i + 1}} - {{step.title}}</button>
         </li>
     </ul>

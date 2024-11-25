@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Step1Component } from '../step1/step1.component';
 import { Step2Component } from '../step2/step2.component';
 import { Step3Component } from '../step3/step3.component';
-import { CommonModule, NgComponentOutlet, NgFor } from '@angular/common';
+import { CommonModule, NgComponentOutlet } from '@angular/common';
 import { StepSelectorComponent } from '../step-selector/step-selector.component';
 import { StepService, StepItem } from '../step.service';
 import { Observable } from 'rxjs';
@@ -13,7 +13,6 @@ import { Observable } from 'rxjs';
   imports: [
     CommonModule,
     NgComponentOutlet,
-    NgFor,
     StepSelectorComponent
   ],
   templateUrl: './stepper.component.html',
@@ -22,7 +21,7 @@ import { Observable } from 'rxjs';
 export class StepperComponent implements OnInit {
   currentStep = 0
   currentStep$!: Observable<StepItem>;
-  stepList$:any = null; 
+  stepList$: any = null;
   steps = [
     { component: Step1Component },
     { component: Step2Component },

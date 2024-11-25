@@ -7,6 +7,7 @@ import { Step4Component } from './step4/step4.component';
 import { Step5Component } from './step5/step5.component';
 
 export interface StepItem {
+  id: number;
   component: any;
   title: string;
 }
@@ -16,32 +17,40 @@ export interface StepItem {
 })
 export class StepService {
   private steps: StepItem[] = [
-    { component: Step1Component, title: "Step 1" },
-    { component: Step2Component, title: "Step 2" },
-    { component: Step3Component, title: "Step 3" },
-    { component: Step4Component, title: "Step 4" },
-    { component: Step5Component, title: "Step 5" },
+    { id: 0, component: Step1Component, title: "Step 1" },
+    { id: 1, component: Step2Component, title: "Step 2" },
+    { id: 2, component: Step3Component, title: "Step 3" },
+    { id: 3, component: Step4Component, title: "Step 4" },
+    { id: 4, component: Step5Component, title: "Step 5" },
   ]
-  get stepsList(): StepItem[] {
-    return this.steps;
-  }
-
   private selectedStepsList: StepItem[] = [this.steps[0]];
   private stepListSubject = new BehaviorSubject<StepItem[]>(this.selectedStepsList);
   stepList$ = this.stepListSubject.asObservable();
 
-  private currentStep: StepItem = this.selectedStepsList[0];
-  private currentStepSubject = new BehaviorSubject<StepItem>(this.currentStep);
+  private currentStepSubject = new BehaviorSubject<StepItem>(this.selectedStepsList[0]);
   currentStep$ = this.currentStepSubject.asObservable();
 
-  selectStep(index: number): void {
-    this.currentStep = this.selectedStepsList[index];
-    this.currentStepSubject.next(this.currentStep);
+  getSteps(): StepItem[] {
+    return this.steps;
   }
 
-  addStep(index: number): void {
-    this.selectedStepsList.push(this.steps[index]);
-    this.stepListSubject.next(this.selectedStepsList)
+  selectStep(id: number): void {
+    const step = this.selectedStepsList.find((item) => item.id === id);
+    if (step) {
+      this.currentStepSubject.next(step);
+    }
+  }
+
+  addStep(id: number): void {
+    const foundedStep = this.selectedStepsList.find((item) => item.id === id);
+    
+    if (!foundedStep) {
+      const step = this.steps.find((item) => item.id === id);
+      if (step) {
+        this.selectedStepsList.push(step);
+        this.stepListSubject.next(this.selectedStepsList);
+      }
+    }
   }
 
   // Update content  

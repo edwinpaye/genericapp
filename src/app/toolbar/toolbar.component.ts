@@ -1,32 +1,42 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DataItem, DataService } from '../data.service';
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { StepItem, StepService } from '../step.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [NgFor],
+  imports: [CommonModule],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css'
 })
 export class ToolbarComponent implements OnInit {
-  items: DataItem[] = [];  
+  // items: DataItem[] = [];
+  steps: DataItem[] = [];
+  stepList$!: Observable<StepItem[]>;
 
-  @Output() itemSelected = new EventEmitter<string>();  
+  @Output() itemSelected = new EventEmitter<string>();
 
-  constructor(private dataService: DataService) {}  
+  constructor(private dataService: DataService, private stepService: StepService) {}
 
-  ngOnInit(): void {  
-    this.items = this.dataService.getItems();  
-  }  
-
-  selectItem(content: string) {  
-    this.itemSelected.emit(content);
-    console.log("select button");
-  } 
-
-  closeComponent(event: MouseEvent) {
-    console.log("close button");
-    event.stopPropagation(); // This prevents the parent's click event from firing  
+  ngOnInit(): void {
+    this.stepList$ = this.stepService.stepList$;
+    // this.items = this.dataService.getItems();
+    // this.steps = this.stepService.();
   }
+
+  selectItem(id: number) {
+    this.stepService.selectStep(id);
+  }
+
+  // selectItem(content: string) {
+  //   this.itemSelected.emit(content);
+  // }
+
+  closeComponent(event: MouseEvent, id: number) {
+    event.stopPropagation();
+    this.stepService.removeStep(id);
+  }
+
 }

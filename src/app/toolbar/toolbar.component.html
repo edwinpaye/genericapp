@@ -1,11 +1,14 @@
 <div class="toolbar">
-    <div class="toolbar-content" *ngFor="let item of items">
-      <div class="animated-button" (click)="selectItem(item.content)" disabled>
-        <div class="component-btn">
-          <span >{{ item.label }}</span>
-          <span></span>
-        </div>
-        <button class="exit-btn" (click)="closeComponent($event)">X</button>
+  <div class="toolbar-content" *ngFor="let item of (stepList$ | async); let i = index">
+  <!-- <div class="toolbar-content" *ngFor="let item of items"> -->
+    <div class="animated-button" (click)="selectItem(item.id)" disabled>
+    <!-- <div class="animated-button" (click)="selectItem(item.content)" disabled> -->
+      <div class="component-btn">
+        <span >{{ item.title }}</span>
+        <!-- <span >{{ item.label }}</span> -->
+        <span></span>
       </div>
+      <button class="exit-btn" (click)="closeComponent($event, item.id)">X</button>
     </div>
+  </div>
 </div>

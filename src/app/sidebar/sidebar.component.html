@@ -1,6 +1,9 @@
-<div class="sidebar">  
-    <h3>Menu</h3>  
-    <div class="button-container" *ngFor="let item of items">  
-      <button class="button" (click)="selectItem(item.content)"><p class="text">{{ item.label }}</p></button>  
-    </div>  
+<div class="sidebar">
+    <h3>GISUL</h3>
+    <div class="button-container" *ngFor="let item of steps">
+      <button class="button" (click)="selectItem(item.id)"><p class="text">{{ item.title }}</p></button>
+    </div>
+    <!-- <div class="button-container" *ngFor="let item of items">
+      <button class="button" (click)="selectItem(item.content)"><p class="text">{{ item.label }}</p></button>
+    </div> -->
 </div>
