@@ -19,9 +19,9 @@ import { DisplayComponent } from './display/display.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  selectedContent: string = '';  
+  // selectedContent: string = '';
 
-  onItemSelected(content: string) {  
-    this.selectedContent = content;  
-  }
+  // onItemSelected(content: string) {
+  //   this.selectedContent = content;
+  // }
 }

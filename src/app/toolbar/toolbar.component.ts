@@ -16,7 +16,7 @@ export class ToolbarComponent implements OnInit {
   steps: DataItem[] = [];
   stepList$!: Observable<StepItem[]>;
 
-  @Output() itemSelected = new EventEmitter<string>();
+  // @Output() itemSelected = new EventEmitter<string>();
 
   constructor(private dataService: DataService, private stepService: StepService) {}
 

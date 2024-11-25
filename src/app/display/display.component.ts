@@ -20,7 +20,7 @@ import { CommonModule, NgComponentOutlet } from '@angular/common';
   styleUrl: './display.component.css'
 })
 export class DisplayComponent implements OnInit{
-  @Input() content: string = '';
+  // @Input() content: string = '';
   currentStep$!: Observable<StepItem>;
 
   constructor(public stepService: StepService) {}

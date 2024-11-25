@@ -1,12 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DataItem, DataService } from '../data.service';
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { StepItem, StepService } from '../step.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [NgFor],
+  imports: [CommonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
@@ -14,7 +14,7 @@ export class SidebarComponent implements OnInit {
   // items: DataItem[] = [];
   steps: StepItem[] = [];
 
-  @Output() itemSelected = new EventEmitter<string>();
+  // @Output() itemSelected = new EventEmitter<string>();
 
   constructor(private dataService: DataService, private stepService: StepService) {}
 
