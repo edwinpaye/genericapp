@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DynamicFormField } from './dynamicFormField';
 import { CommonModule } from '@angular/common';
+import { GenericFormService } from '../services/generic-form.service';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -12,12 +13,15 @@ import { CommonModule } from '@angular/common';
 })
 export class DynamicFormComponent implements OnInit {
   @Input() fields: DynamicFormField[] = [];
+  // @Input() service!: GenericFormService;
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, public formService: GenericFormService) {}
 
   ngOnInit(): void {
-    this.form = this.fb.group({});
+    // this.form = this.fb.group({});
+    // this.service ? this.form = this.service.formGroup : this.form = this.formService.formGroup;
+    this.form = this.formService.formGroup;
     this.fields.forEach(field => {
       this.form.addControl(field.name, this.fb.control('', Validators.required));
     });
@@ -25,5 +29,7 @@ export class DynamicFormComponent implements OnInit {
 
   onSubmit() {
     console.log(this.form.value);
+    
   }
+
 }
