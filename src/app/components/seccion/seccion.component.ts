@@ -1,20 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DynamicFormComponent } from '../../dynamic-form/dynamic-form.component';
 import { SeccionFormServiceDirective } from '../../directives/seccion-form-service.directive';
 import { DynamicFormField } from '../../dynamic-form/dynamicFormField';
 import { TableColumn } from '../../dynamic-table/tableColumn';
+import { DynamicTableComponent } from '../../dynamic-table/dynamic-table.component';
+import { SeccionFormService } from '../../services/seccion-form.service';
+import { SeccionService } from '../../services/seccion.service';
+import { Seccion } from '../../models/seccion';
 // import { SeccionFormService } from '../../services/seccion-form.service';
 
 @Component({
   selector: 'app-seccion',
   standalone: true,
-  imports: [DynamicFormComponent, SeccionFormServiceDirective],
+  imports: [
+    DynamicFormComponent,
+    SeccionFormServiceDirective,
+    DynamicTableComponent
+  ],
   templateUrl: './seccion.component.html',
   styleUrl: './seccion.component.css'
 })
-export class SeccionComponent {
-
-  // constructor(public service: SeccionFormService) {}
+export class SeccionComponent implements OnInit {
 
   fields: DynamicFormField[] = [
     { type: 'text', label: 'Title', name: 'titulo' },
@@ -29,15 +35,19 @@ export class SeccionComponent {
   // cuentaMayor: any;
 
   columns: TableColumn[] = [
-    { field: 'name', header: 'Name' },
-    { field: 'age', header: 'Age' },
-    { field: 'email', header: 'Email' }
+    { field: 'title', header: 'Title' },
+    { field: 'content', header: 'Content' },
+    // { field: 'email', header: 'Email' }
   ];
 
-  data: any[] = [
-    { name: 'John Doe', age: 28, email: 'john@example.com' },
-    { name: 'Jane Doe', age: 26, email: 'jane@example.com' },
-    { name: 'Alice Smith', age: 30, email: 'alice@example.com' }
-  ];
+  data: Seccion[] = [];
+
+  constructor(public formService: SeccionFormService, public seccionService: SeccionService) {}
+
+  ngOnInit(): void {
+    this.seccionService.getAll().subscribe({
+      next: res => this.data = (res as any).ENTITY
+    })
+  }
 
 }

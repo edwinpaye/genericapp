@@ -12,7 +12,7 @@ export class SeccionService extends GenericService<Seccion> {
 
   constructor(http: HttpClient) {
     super(http);
-    this.setApiUrl(environment.apiUrl);
+    this.setApiUrl(environment.apiUrl + "/seccion/v1");
   }
 
 }
