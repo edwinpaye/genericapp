@@ -1,0 +1,6 @@
+<ul>  
+    <li *ngFor="let item of items">  
+      {{ item.name }}  <!-- Display the item's name -->  
+      <app-recursive *ngIf="item.children" [items]="item.children"></app-recursive>  <!-- Recursive call -->  
+    </li>  
+</ul>

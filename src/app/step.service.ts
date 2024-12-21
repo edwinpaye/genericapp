@@ -6,6 +6,7 @@ import { Step3Component } from './step3/step3.component';
 import { Step4Component } from './step4/step4.component';
 import { Step5Component } from './step5/step5.component';
 import { SeccionComponent } from './components/seccion/seccion.component';
+import { DisplayComponent } from './display/display.component';
 
 export interface StepItem {
   id: number;
@@ -23,7 +24,7 @@ export class StepService {
     { id: 2, component: Step3Component, title: "Step 3" },
     { id: 3, component: Step4Component, title: "Step 4" },
     { id: 4, component: Step5Component, title: "Step 5" },
-    { id: 5, component: SeccionComponent, title: "Step 6" },
+    { id: 5, component: SeccionComponent, title: "Secciones" },
   ]
   private selectedStepsList: StepItem[] = [this.steps[0]];
   private stepListSubject = new BehaviorSubject<StepItem[]>(this.selectedStepsList);
