@@ -1,33 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+
+export interface ResponseBody<T> {
+  ESTADO: string;
+  MENSAJE: string;
+  ENTITY: T[];
+}
 
 // @Injectable({
 //   providedIn: 'root'
 // })
 export abstract class GenericService<T> {
   private apiUrl: string = environment.apiUrl;
-  private items: T[] = [];  
-  private itemSubject = new BehaviorSubject<T[]>(this.items);  
-  
-  items$ = this.itemSubject.asObservable();  
-
-  // addItem(data: T) {  
-  //   const newItem: GenericItem<T> = { id: this.items.length + 1, data };  
-  //   this.items.push(newItem);  
-  //   this.itemSubject.next(this.items);  
-  // }  
-
-  // updateItem(id: number, data: T) {  
-  //   const index = this.items.findIndex(item => item.id === id);  
-  //   if (index !== -1) {  
-  //     this.items[index].data = data;  
-  //     this.itemSubject.next(this.items);  
-  //   }  
-  // }  
-
+  private items: T[] = [];
+  private itemSubject = new BehaviorSubject<T[]>(this.items);
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  items$ = this.itemSubject.asObservable();
+  isLoading$ = this.loadingSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.apiUrl = '';
@@ -37,38 +29,52 @@ export abstract class GenericService<T> {
     this.apiUrl = url;
   }
 
-  getAll(): Observable<T[]> {
-    return this.http.get<T[]>(this.apiUrl)
+  getAll(subPath: string = ''): Observable<T[]> {
+    this.loadingSubject.next(true);
+    const url = this.apiUrl + subPath;
+    return this.http.get<ResponseBody<T>>(url)
       .pipe(
-        catchError(this.handleError<T[]>('getAll', []))
+        catchError(this.handleError<ResponseBody<T>>('getAll', {ENTITY: [], ESTADO: "NOK", MENSAJE: "Error en la solicitud"})),
+        tap(value => {
+          console.log(value.ESTADO + ': ' + value.MENSAJE);
+          this.itemSubject.next(value.ENTITY);
+          // this.items = value.ENTITY;
+        }),
+        map(res => res.ENTITY),
+        finalize(() => this.loadingSubject.next(false))
       );
   }
 
-  get(id: number): Observable<T> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<T>(url)
+  get(subPath: string = ''): Observable<T> {
+    // const url = `${this.apiUrl}/${id}`;
+    const url = this.apiUrl + subPath;
+    return this.http.get<ResponseBody<T>>(url)
       .pipe(
-        catchError(this.handleError<T>(`get id=${id}`))
+        catchError(this.handleError<ResponseBody<T>>('get')),
+        map(res => res.ENTITY[1]),
       );
   }
 
-  create(item: T): Observable<T> {
-    return this.http.post<T>(this.apiUrl, item)
+  create(item: T, subPath: string = ''): Observable<T> {
+    const url = this.apiUrl + subPath;
+    return this.http.post<T>(url, item)
       .pipe(
         catchError(this.handleError<T>('create'))
       );
   }
 
-  update(id: number, item: T): Observable<T> {
-    const url = `${this.apiUrl}/${id}`;
+  update(item: T, subPath: string = ''): Observable<T> {
+    // const url = `${this.apiUrl}/${id}`;
+    const url = this.apiUrl + subPath;
     return this.http.put<T>(url, item)
       .pipe(
         catchError(this.handleError<T>('update'))
       );
   }
 
-  delete(id: number): Observable<T> {
-    const url = `${this.apiUrl}/${id}`;
+  delete(subPath: string = ''): Observable<T> {
+    // const url = `${this.apiUrl}/${id}`;
+    const url = this.apiUrl + subPath;
     return this.http.delete<T>(url)
       .pipe(
         catchError(this.handleError<T>('delete'))
@@ -81,37 +87,5 @@ export abstract class GenericService<T> {
       return of(result as T);
     };
   }
+
 }
-
-// import { HttpClient } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-// import { Observable } from 'rxjs';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class GenericService<T> {
-
-//   constructor(private http: HttpClient) { }
-
-//   getAll(url: string): Observable<T[]> {
-//     return this.http.get<T[]>(url);
-//   }
-
-//   getById(url: string, id: number): Observable<T> {
-//     return this.http.get<T>(`${url}/${id}`);
-//   }
-
-//   create(url: string, entity: T): Observable<T> {
-//     return this.http.post<T>(url, entity);
-//   }
-
-//   update(url: string, id: any, entity: T): Observable<T> {
-//     return this.http.put<T>(`${url}/${id}`, entity);
-//   }
-
-//   delete(url: string, id: any): Observable<void> {
-//     return this.http.delete<void>(`${url}/${id}`);
-//   }
-
-// }

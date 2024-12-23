@@ -7,12 +7,14 @@ import { DynamicTableComponent } from '../../dynamic-table/dynamic-table.compone
 import { SeccionFormService } from '../../services/seccion-form.service';
 import { SeccionService } from '../../services/seccion.service';
 import { Seccion } from '../../models/seccion';
-// import { SeccionFormService } from '../../services/seccion-form.service';
+import { finalize, map, Observable, tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-seccion',
   standalone: true,
   imports: [
+    CommonModule,
     DynamicFormComponent,
     SeccionFormServiceDirective,
     DynamicTableComponent
@@ -28,26 +30,25 @@ export class SeccionComponent implements OnInit {
     // { type: 'select', label: 'Country', name: 'country', options: ['USA', 'Canada', 'UK'] },
     // { type: 'radio', label: 'Gender', name: 'gender', options: ['Male', 'Female'] }
   ];
-  // orden: number;
-  // type: number;
-  // idpadre: number;
-  // subsecciones: Seccion[];
-  // cuentaMayor: any;
 
   columns: TableColumn[] = [
     { field: 'title', header: 'Title' },
     { field: 'content', header: 'Content' },
-    // { field: 'email', header: 'Email' }
   ];
 
-  data: Seccion[] = [];
+  data$!: Observable<Seccion[]>;
+  isLoading$!: Observable<boolean>;
 
   constructor(public formService: SeccionFormService, public seccionService: SeccionService) {}
 
   ngOnInit(): void {
-    this.seccionService.getAll().subscribe({
-      next: res => this.data = (res as any).ENTITY
-    })
+    this.loadData();
+    this.data$ = this.seccionService.items$;
+    this.isLoading$ = this.seccionService.isLoading$;
+  }
+
+  loadData() {
+    this.seccionService.getAll();
   }
 
 }

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-@Injectable({
-  providedIn: 'root',
-})
+// @Injectable({
+//   providedIn: 'root',
+// })
 export abstract class GenericFormService {
   private formConfig: any[] = [];
   public formGroup: FormGroup;

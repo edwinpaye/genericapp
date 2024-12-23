@@ -1,2 +1,9 @@
 <app-dynamic-form [fields]="fields" seccionFormServiceProvider></app-dynamic-form>
-<app-dynamic-table [columns]="columns" [data]="data"></app-dynamic-table>
+<div *ngIf="(isLoading$ | async)">Loading...</div>
+<div *ngIf="!(isLoading$ | async)">
+    <ng-container *ngIf="data$ | async as data; else noData">
+        <!-- <pre>{{ data | json }}</pre> -->
+        <app-dynamic-table [columns]="columns" [data]="data"></app-dynamic-table>
+    </ng-container>
+    <ng-template #noData>No data available.</ng-template>
+</div>
