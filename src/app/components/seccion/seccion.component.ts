@@ -9,7 +9,6 @@ import { SeccionService } from '../../services/seccion.service';
 import { Seccion } from '../../models/seccion';
 import { Observable, take } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-seccion',
@@ -43,7 +42,6 @@ export class SeccionComponent implements OnInit {
   constructor(public formService: SeccionFormService, public seccionService: SeccionService) {}
 
   ngOnInit(): void {
-    this.seccionService.setApiUrl(environment.apiUrl + '/seccion/v1');
     if (this.seccionService.getCurrentItems() == null || this.seccionService.getCurrentItems().length < 1) {
       this.loadData();
     }

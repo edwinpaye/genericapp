@@ -56,15 +56,6 @@ export class StepService {
     }
   }
 
-  // Update content  
-  // updateContent(updatedItem: StepItem): void {  
-  //   const index = this.contentList.findIndex(item => item.id === updatedItem.id);  
-  //   if (index !== -1) {  
-  //     this.contentList[index] = updatedItem;  
-  //     this.contentListSubject.next(this.contentList);  
-  //   }  
-  // }  
-
   removeStep(id: number): void {
     if(this.selectedStepsList.length > 1) {
       const index = this.selectedStepsList.findIndex((item) => item.id === id);
