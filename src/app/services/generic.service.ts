@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 export interface ResponseBody<T> {
   ESTADO: string;
   MENSAJE: string;
-  ENTITY: T[];
+  ENTITY: T;
 }
 
 // @Injectable({
@@ -32,13 +32,12 @@ export abstract class GenericService<T> {
   getAll(subPath: string = ''): Observable<T[]> {
     this.loadingSubject.next(true);
     const url = this.apiUrl + subPath;
-    return this.http.get<ResponseBody<T>>(url)
+    return this.http.get<ResponseBody<T[]>>(url)
       .pipe(
-        catchError(this.handleError<ResponseBody<T>>('getAll', {ENTITY: [], ESTADO: "NOK", MENSAJE: "Error en la solicitud"})),
+        catchError(this.handleError<ResponseBody<T[]>>('getAll', {ENTITY: [], ESTADO: "NOK", MENSAJE: "Error en la solicitud"})),
         tap(value => {
           console.log(value.ESTADO + ': ' + value.MENSAJE);
           this.itemSubject.next(value.ENTITY);
-          // this.items = value.ENTITY;
         }),
         map(res => res.ENTITY),
         finalize(() => this.loadingSubject.next(false))
@@ -51,33 +50,48 @@ export abstract class GenericService<T> {
     return this.http.get<ResponseBody<T>>(url)
       .pipe(
         catchError(this.handleError<ResponseBody<T>>('get')),
-        map(res => res.ENTITY[1]),
+        tap(value => {
+          console.log(value.ESTADO + ': ' + value.MENSAJE);
+        }),
+        map(res => res.ENTITY),
       );
   }
 
   create(item: T, subPath: string = ''): Observable<T> {
     const url = this.apiUrl + subPath;
-    return this.http.post<T>(url, item)
+    return this.http.post<ResponseBody<T>>(url, item)
       .pipe(
-        catchError(this.handleError<T>('create'))
+        catchError(this.handleError<ResponseBody<T>>('create')),
+        tap(value => {
+          console.log(value.ESTADO + ': ' + value.MENSAJE);
+        }),
+        map(res => res.ENTITY),
       );
   }
 
   update(item: T, subPath: string = ''): Observable<T> {
     // const url = `${this.apiUrl}/${id}`;
     const url = this.apiUrl + subPath;
-    return this.http.put<T>(url, item)
+    return this.http.put<ResponseBody<T>>(url, item)
       .pipe(
-        catchError(this.handleError<T>('update'))
+        catchError(this.handleError<ResponseBody<T>>('update')),
+        tap(value => {
+          console.log(value.ESTADO + ': ' + value.MENSAJE);
+        }),
+        map(res => res.ENTITY),
       );
   }
 
   delete(subPath: string = ''): Observable<T> {
     // const url = `${this.apiUrl}/${id}`;
     const url = this.apiUrl + subPath;
-    return this.http.delete<T>(url)
+    return this.http.delete<ResponseBody<T>>(url)
       .pipe(
-        catchError(this.handleError<T>('delete'))
+        catchError(this.handleError<ResponseBody<T>>('delete')),
+        tap(value => {
+          console.log(value.ESTADO + ': ' + value.MENSAJE);
+        }),
+        map(res => res.ENTITY),
       );
   }
 
