@@ -7,8 +7,9 @@ import { DynamicTableComponent } from '../../dynamic-table/dynamic-table.compone
 import { SeccionFormService } from '../../services/seccion-form.service';
 import { SeccionService } from '../../services/seccion.service';
 import { Seccion } from '../../models/seccion';
-import { finalize, map, Observable, tap } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-seccion',
@@ -42,13 +43,16 @@ export class SeccionComponent implements OnInit {
   constructor(public formService: SeccionFormService, public seccionService: SeccionService) {}
 
   ngOnInit(): void {
-    this.loadData();
+    this.seccionService.setApiUrl(environment.apiUrl + '/seccion/v1');
+    if (this.seccionService.getCurrentItems() == null || this.seccionService.getCurrentItems().length < 1) {
+      this.loadData();
+    }
     this.data$ = this.seccionService.items$;
     this.isLoading$ = this.seccionService.isLoading$;
   }
 
   loadData() {
-    this.seccionService.getAll();
+    this.seccionService.getAll().pipe(take(1)).subscribe();
   }
 
 }

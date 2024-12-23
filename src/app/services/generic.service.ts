@@ -22,16 +22,21 @@ export abstract class GenericService<T> {
   isLoading$ = this.loadingSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    this.apiUrl = '';
+    // this.apiUrl = '';
   }
 
   setApiUrl(url: string): void {
     this.apiUrl = url;
   }
 
+  getCurrentItems(): T[] {
+    return this.itemSubject.getValue();
+  }
+
   getAll(subPath: string = ''): Observable<T[]> {
     this.loadingSubject.next(true);
     const url = this.apiUrl + subPath;
+    console.log('loading data..');
     return this.http.get<ResponseBody<T[]>>(url)
       .pipe(
         catchError(this.handleError<ResponseBody<T[]>>('getAll', {ENTITY: [], ESTADO: "NOK", MENSAJE: "Error en la solicitud"})),
