@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { DataItem, DataService } from '../data.service';
 import { CommonModule } from '@angular/common';
 import { StepItem, StepService } from '../step.service';
 
@@ -11,15 +10,13 @@ import { StepItem, StepService } from '../step.service';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent implements OnInit {
-  // items: DataItem[] = [];
   steps: StepItem[] = [];
 
   // @Output() itemSelected = new EventEmitter<string>();
 
-  constructor(private dataService: DataService, private stepService: StepService) {}
+  constructor(private stepService: StepService) {}
 
   ngOnInit(): void {
-    // this.items = this.dataService.getItems();
     this.steps = this.stepService.getSteps();
   }
 

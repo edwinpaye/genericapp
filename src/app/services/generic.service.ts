@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+// import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
@@ -21,9 +21,7 @@ export abstract class GenericService<T> {
   items$ = this.itemSubject.asObservable();
   isLoading$ = this.loadingSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    // this.apiUrl = '';
-  }
+  constructor(private http: HttpClient) { }
 
   setApiUrl(url: string): void {
     this.apiUrl = url;
