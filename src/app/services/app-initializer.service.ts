@@ -7,8 +7,7 @@ import { Observable, of } from 'rxjs';
 export class AppInitializerService {
   load(): Observable<void> {
     console.log('Loading app configurations...');
-    setTimeout(() => console.log("alreadey.."), 300000)
-    // Simulate initialization logic
+    // setTimeout(() => console.log("already.."), 300000)
     return of();
   }
 }

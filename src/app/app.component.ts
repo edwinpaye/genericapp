@@ -4,6 +4,7 @@ import { StepperComponent } from './stepper/stepper.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { DisplayComponent } from './display/display.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { DisplayComponent } from './display/display.component';
     StepperComponent,
     SidebarComponent,
     ToolbarComponent,
-    DisplayComponent
+    DisplayComponent,
+    NotificationsComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

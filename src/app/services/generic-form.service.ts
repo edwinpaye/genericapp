@@ -19,7 +19,7 @@ export abstract class GenericFormService {
 
   private buildForm() {
     this.formConfig.forEach((field) => {
-      const control = this.fb.control(field.value || ''); // Create a control with its default value
+      const control = this.fb.control(field.value || '');
       this.formGroup.addControl(field.name, control);
     });
   }

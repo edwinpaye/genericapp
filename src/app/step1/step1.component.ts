@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Item, RecursiveComponent } from '../components/recursive/recursive.component';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-step1',
@@ -31,4 +32,33 @@ export class Step1Component {
       ]  
     }  
   ];
+
+  constructor(private notificationService: NotificationService) {}
+
+  // type: 'success' | 'error' | 'info' | 'warning';
+  execSuccess() {
+    this.notificationService.addNotification({
+      type: 'success',
+      message: 'Action performed successfully!',
+    });
+  }
+  execInfo() {
+    this.notificationService.addNotification({
+      type: 'info',
+      message: 'Action performed successfully!',
+    });
+  }
+  execError() {
+    this.notificationService.addNotification({
+      type: 'error',
+      message: 'Action performed successfully!',
+    });
+  }
+  execWarning() {
+    this.notificationService.addNotification({
+      type: 'warning',
+      message: 'Action performed successfully!',
+    });
+  }
+
 }
