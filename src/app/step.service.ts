@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Step1Component } from './step1/step1.component';
-import { Step2Component } from './step2/step2.component';
-import { Step3Component } from './step3/step3.component';
-import { Step4Component } from './step4/step4.component';
-import { Step5Component } from './step5/step5.component';
-import { SeccionComponent } from './components/seccion/seccion.component';
-import { DisplayComponent } from './display/display.component';
+// import { Step1Component } from './step1/step1.component';
+// import { Step2Component } from './step2/step2.component';
+// import { Step3Component } from './step3/step3.component';
+// import { Step4Component } from './step4/step4.component';
+// import { Step5Component } from './step5/step5.component';
+// import { SeccionComponent } from './components/seccion/seccion.component';
+import { Router } from '@angular/router';
+// import { DisplayComponent } from './display/display.component';
 
 export interface StepItem {
   id: number;
-  component: any;
   title: string;
+  path: string;
 }
 
 @Injectable({
@@ -19,12 +20,12 @@ export interface StepItem {
 })
 export class StepService {
   private steps: StepItem[] = [
-    { id: 0, component: Step1Component, title: "Step 1" },
-    { id: 1, component: Step2Component, title: "Step 2" },
-    { id: 2, component: Step3Component, title: "Step 3" },
-    { id: 3, component: Step4Component, title: "Step 4" },
-    { id: 4, component: Step5Component, title: "Step 5" },
-    { id: 5, component: SeccionComponent, title: "Secciones" },
+    { id: 0, title: "Step 1", path: "/step1" },
+    { id: 1, title: "Step 2", path: "/step2" },
+    { id: 2, title: "Step 3", path: "/step3" },
+    { id: 3, title: "Step 4", path: "/step4" },
+    { id: 4, title: "Step 5", path: "/step5" },
+    { id: 5, title: "Secciones", path: "/secciones" },
   ]
   private selectedStepsList: StepItem[] = [this.steps[0]];
   private stepListSubject = new BehaviorSubject<StepItem[]>(this.selectedStepsList);
@@ -32,6 +33,8 @@ export class StepService {
 
   private currentStepSubject = new BehaviorSubject<StepItem>(this.selectedStepsList[0]);
   currentStep$ = this.currentStepSubject.asObservable();
+
+  constructor(private router: Router) {}
 
   getSteps(): StepItem[] {
     return this.steps;
@@ -41,6 +44,7 @@ export class StepService {
     const step = this.selectedStepsList.find((item) => item.id === id);
     if (step) {
       this.currentStepSubject.next(step);
+      if (step.path) this.router.navigate([step.path]);
     }
   }
 

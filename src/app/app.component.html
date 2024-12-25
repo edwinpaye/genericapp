@@ -1,14 +1,12 @@
 <div class="container">
     <app-notifications></app-notifications>
     <div class="sidebar">
-        <!-- <app-sidebar (itemSelected)="onItemSelected($event)"></app-sidebar> -->
         <app-sidebar></app-sidebar>
     </div>
     <div class="content">
-        <!-- <app-toolbar (itemSelected)="onItemSelected($event)"></app-toolbar>   -->
         <app-toolbar></app-toolbar>  
 
-        <app-display></app-display>
-        <!-- <app-stepper></app-stepper> -->
+        <!-- <app-display></app-display> -->
+        <router-outlet></router-outlet>
     </div>
 </div>
