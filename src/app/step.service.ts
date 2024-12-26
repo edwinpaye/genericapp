@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 
 export interface StepItem {
   id: number;
+  // component: any;
   title: string;
   path: string;
 }
