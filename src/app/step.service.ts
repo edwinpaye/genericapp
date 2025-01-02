@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 // import { Step1Component } from './step1/step1.component';
 // import { Step2Component } from './step2/step2.component';
 // import { Step3Component } from './step3/step3.component';
@@ -28,17 +28,61 @@ export class StepService {
     { id: 4, title: "Step 5", path: "/step5" },
     { id: 5, title: "Secciones", path: "/secciones" },
   ]
-  private selectedStepsList: StepItem[] = [this.steps[0]];
+  // private selectedStepsList: StepItem[] = [this.steps[0]];
+  private selectedStepsList: StepItem[] = [];
   private stepListSubject = new BehaviorSubject<StepItem[]>(this.selectedStepsList);
   stepList$ = this.stepListSubject.asObservable();
 
   private currentStepSubject = new BehaviorSubject<StepItem>(this.selectedStepsList[0]);
   currentStep$ = this.currentStepSubject.asObservable();
 
-  constructor(private router: Router) {}
+  // private selectedStepsList: StepItem[];
+  // private stepListSubject: BehaviorSubject<StepItem[]>;
+  // stepList$: Observable<StepItem[]>;
+
+  // private currentStepSubject: BehaviorSubject<StepItem>;
+  // currentStep$: Observable<StepItem>;
+
+  constructor(private router: Router) {
+    // this.stepListSubject.next(this.getStepByRoute());
+
+    // this.selectedStepsList = this.getStepByRoute();
+    // this.stepListSubject = new BehaviorSubject<StepItem[]>(this.selectedStepsList);
+    // this.stepList$ = this.stepListSubject.asObservable();
+    // this.currentStepSubject = new BehaviorSubject<StepItem>(this.selectedStepsList[0]);
+    // this.currentStep$ = this.currentStepSubject.asObservable();
+  }
 
   getSteps(): StepItem[] {
     return this.steps;
+  }
+
+  getStepsByPath(path: string): StepItem[] {
+    console.log(path);
+    const steps = this.steps.find((item) => item.path == path);
+    return steps ? [steps] : [];
+  }
+
+  setSteps(steps: StepItem[]) {
+    this.selectedStepsList = steps;
+    this.stepListSubject.next(this.selectedStepsList);
+  }
+
+  initStepsByCurrentPath() {
+    this.setSteps(this.getStepsByPath(this.router.url));
+  }
+
+  initFirstStep() {
+    this.addStep(0);
+    this.selectStep(0);
+  }
+
+  getStepByRoute(): StepItem[] {
+    const path = this.router.url;// ? this.router.url : "/step1";
+    console.log(path);
+    const step = this.steps.find((item) => item.path == path);
+    this.router.navigate([path]);
+    return [step? step: this.steps[0]];
   }
 
   selectStep(id: number): void {

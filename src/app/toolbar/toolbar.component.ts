@@ -19,6 +19,8 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.stepList$ = this.stepService.stepList$;
+    // this.stepService.initStepsByCurrentPath();
+    this.stepService.initFirstStep();
   }
 
   selectItem(id: number) {
