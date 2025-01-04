@@ -33,3 +33,35 @@
     </div>  
     <button type="submit">Submit</button>  
 </form> -->
+
+<!-- <form [formGroup]="exampleForm" (ngSubmit)="onSubmit2()">  
+    <mat-form-field>  
+        <mat-label>Name</mat-label>  
+        <input matInput formControlName="name" placeholder="Enter your name">  
+        <mat-error *ngIf="exampleForm.get('name')?.invalid && exampleForm.get('name')?.touched">  
+            Name is required  
+        </mat-error>  
+    </mat-form-field>  
+
+    <mat-form-field>  
+        <mat-label>Email</mat-label>  
+        <input matInput formControlName="email" placeholder="Enter your email">  
+        <mat-error *ngIf="exampleForm.get('email')?.invalid && exampleForm.get('email')?.touched">  
+            Please enter a valid email  
+        </mat-error>  
+    </mat-form-field>  
+
+    <mat-form-field>  
+        <mat-label>Birthday</mat-label>  
+        <input matInput [matDatepicker]="picker" formControlName="birthday">  
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>  
+        <mat-datepicker #picker></mat-datepicker>  
+    </mat-form-field>  
+
+    <div formGroupName="preferences">  
+        <mat-checkbox formControlName="newsletter">Subscribe to newsletter</mat-checkbox>  
+        <mat-checkbox formControlName="notifications">Enable notifications</mat-checkbox>  
+    </div>  
+
+    <button type="submit" mat-raised-button color="primary">Submit</button>  
+</form> -->

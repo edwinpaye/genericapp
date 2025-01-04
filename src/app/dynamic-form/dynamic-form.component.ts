@@ -16,7 +16,17 @@ export class DynamicFormComponent implements OnInit {
   // @Input() service!: GenericFormService;
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder, public formService: GenericFormService) {}
+  constructor(private fb: FormBuilder, public formService: GenericFormService) {
+    this.exampleForm = this.fb.group({  
+      name: ['', Validators.required],  
+      email: ['', [Validators.required, Validators.email]],  
+      birthday: ['', Validators.required],  
+      preferences: this.fb.group({  
+        newsletter: [false],  
+        notifications: [false],  
+      }),  
+    }); 
+  }
 
   ngOnInit(): void {
     // this.form = this.fb.group({});
@@ -30,6 +40,12 @@ export class DynamicFormComponent implements OnInit {
   onSubmit() {
     console.log(this.form.value);
     
+  }
+
+  exampleForm: FormGroup;
+
+  onSubmit2() {
+    console.log(this.exampleForm.value);
   }
 
 }
