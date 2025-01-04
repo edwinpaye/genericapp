@@ -1,0 +1,7 @@
+<div class="custom-context-menu" *ngIf="isVisible" [style.top.px]="position.y" [style.left.px]="position.x" (contextmenu)="preventContextMenu($event)">
+    <ul>
+        <li (click)="doAction1()">Action 1</li>
+        <li (click)="doAction2()">Action 2</li>
+        <li (click)="doAction3()">Action 3</li>
+    </ul>
+</div>

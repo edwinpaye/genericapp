@@ -2,13 +2,15 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StepItem, StepService } from '../step.service';
 import { ThemeToggleComponent } from '../components/theme-toggle/theme-toggle.component';
+import { ContextMenuComponent } from '../components/context-menu/context-menu.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [
     CommonModule,
-    ThemeToggleComponent
+    ThemeToggleComponent,
+    ContextMenuComponent,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
