@@ -1,0 +1,22 @@
+.list-container {
+    width: 300px;  
+    margin: 20px;  
+    border: 1px solid #ccc;  
+    border-radius: 4px;  
+    padding: 10px;  
+}
+
+.list-item {
+    padding: 8px;  
+    margin: 4px 0;  
+    background-color: #f0f0f0;  
+    border: 1px solid #ccc;  
+    border-radius: 4px;  
+    cursor: move;
+    color: #333;
+}
+
+.list-item:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}

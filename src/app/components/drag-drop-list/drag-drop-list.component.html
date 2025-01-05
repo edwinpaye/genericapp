@@ -1,0 +1,13 @@
+<div class="list-container">
+    <div
+      *ngFor="let item of items; let i = index"
+      class="list-item"
+      draggable="true"
+      (dragstart)="onDragStart($event, i)"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event, i)"
+    >
+      {{ item }}
+    </div>
+</div>
+<button (click)="printList()">Print List</button>
