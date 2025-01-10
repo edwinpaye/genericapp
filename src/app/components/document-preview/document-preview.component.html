@@ -12,3 +12,14 @@
 <object *ngIf="pdfSrc" [data]="pdfSrc" type="application/pdf" width="100%" height="600px">
     <p>This browser does not support PDFs. Please download the PDF to view it: <a [href]="pdfSrc" download>Download PDF</a>.</p> 
 </object>
+
+<!-- <a [href]="pdfSrc" download>Download Excel</a> -->
+<button (click)="download()">Download Excel File</button>
+
+<button (click)="viewFile()">View PDF</button>
+<button (click)="viewFileFromJson()">View PDF From Json</button>
+<div *ngIf="safePdfUrl">
+    <object [data]="safePdfUrl" type="application/pdf" width="100%" height="600px">
+    <p>Your browser does not support viewing PDFs inline. <a [href]="safePdfUrl" target="_blank">Download the PDF</a></p>
+    </object>
+</div>
