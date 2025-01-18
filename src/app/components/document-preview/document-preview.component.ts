@@ -81,7 +81,6 @@ export class DocumentPreviewComponent implements OnDestroy {
 
     this.fileService.getJsonWithBase64(url, payload).subscribe({
       next: (response) => {
-        // Extract Base64 string from JSON response
         const base64String = response.bytes;
 
         // Convert Base64 string to Blob
@@ -95,7 +94,6 @@ export class DocumentPreviewComponent implements OnDestroy {
         const blob = new Blob([byteArray], { type: 'application/pdf' });
         const objectUrl = window.URL.createObjectURL(blob);
 
-        // Sanitize the object URL for embedding
         this.safePdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(objectUrl);
       },
       error: (error) => {
@@ -123,7 +121,7 @@ export class DocumentPreviewComponent implements OnDestroy {
       tipo_descarga: "excel",
       usuario: "CESAR"
     };
-    const filename = 'example.xlsx'; // Specify the file name to save as
+    const filename = 'example.xlsx';
 
     this.fileService.downloadFile(url, payload, filename);
   }

@@ -1,0 +1,18 @@
+.items-list {  
+    border: 1px solid #ccc;  
+    min-height: 150px;  
+    padding: 10px;  
+    margin-bottom: 10px;  
+  }  
+  
+  .item {  
+    border: 1px solid #aaa;  
+    padding: 8px;  
+    margin-bottom: 5px;  
+    background-color: #fff;  
+    cursor: move;  
+  }  
+  
+  .item:hover {  
+    background-color: #f0f0f0;  
+  }

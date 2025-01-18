@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div *ngFor="let field of fields">
         <label>{{ field.label }}</label>
 
@@ -15,53 +15,29 @@
             </label>
         </div>
 
-      <!-- Add other input types as needed -->
     </div>
 
     <button type="submit">Submit</button>
-</form>
-
-<!-- <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">  
-    <div *ngFor="let field of formConfig">  
-        <label>{{ field.label }}</label>  
-        <input *ngIf="field.type === 'text'" [formControlName]="field.name" type="text" />  
-        <input *ngIf="field.type === 'number'" [formControlName]="field.name" type="number" />  
-        <select *ngIf="field.type === 'select'" [formControlName]="field.name">  
-            <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>  
-        </select>  
-
-    </div>  
-    <button type="submit">Submit</button>  
 </form> -->
 
-<!-- <form [formGroup]="exampleForm" (ngSubmit)="onSubmit2()">  
-    <mat-form-field>  
-        <mat-label>Name</mat-label>  
-        <input matInput formControlName="name" placeholder="Enter your name">  
-        <mat-error *ngIf="exampleForm.get('name')?.invalid && exampleForm.get('name')?.touched">  
-            Name is required  
-        </mat-error>  
-    </mat-form-field>  
+<h1>Dynamic Form with Drag and Drop</h1>  
 
-    <mat-form-field>  
-        <mat-label>Email</mat-label>  
-        <input matInput formControlName="email" placeholder="Enter your email">  
-        <mat-error *ngIf="exampleForm.get('email')?.invalid && exampleForm.get('email')?.touched">  
-            Please enter a valid email  
-        </mat-error>  
-    </mat-form-field>  
-
-    <mat-form-field>  
-        <mat-label>Birthday</mat-label>  
-        <input matInput [matDatepicker]="picker" formControlName="birthday">  
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>  
-        <mat-datepicker #picker></mat-datepicker>  
-    </mat-form-field>  
-
-    <div formGroupName="preferences">  
-        <mat-checkbox formControlName="newsletter">Subscribe to newsletter</mat-checkbox>  
-        <mat-checkbox formControlName="notifications">Enable notifications</mat-checkbox>  
+<div>  
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">  
+    <div class="items-list">  
+      <div *ngFor="let item of items.controls; let i = index"   
+           [formGroupName]="i"   
+           class="item"   
+           draggable="true"   
+           (dragstart)="onDragStart($event, i)"   
+           (dragover)="onDragOver($event)"   
+           (drop)="onDrop($event)">  
+        <input formControlName="name" placeholder="Item Name" />  
+        <button type="button" (click)="removeItem(i)">Remove</button>  
+      </div>  
     </div>  
 
-    <button type="submit" mat-raised-button color="primary">Submit</button>  
-</form> -->
+    <button type="button" (click)="addItem()">Add Item</button>  
+    <button type="submit" [disabled]="form.invalid">Submit</button>  
+  </form>  
+</div>

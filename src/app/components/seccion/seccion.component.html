@@ -1,4 +1,4 @@
-<app-dynamic-form [fields]="fields" seccionFormServiceProvider></app-dynamic-form>
+<!-- <app-dynamic-form [fields]="fields" seccionFormServiceProvider></app-dynamic-form> -->
 <div *ngIf="(isLoading$ | async)">Loading...</div>
 <div *ngIf="!(isLoading$ | async)">
     <ng-container *ngIf="data$ | async as data; else noData">
