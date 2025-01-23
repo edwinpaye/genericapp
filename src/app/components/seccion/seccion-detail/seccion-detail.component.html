@@ -1,0 +1,14 @@
+<div class="container">
+    <h2>Seccion Detail</h2>
+    <div *ngIf="seccion">
+      <p><strong>ID:</strong> {{ seccion.idseccion }}</p>
+      <p><strong>Orden:</strong> {{ seccion.orden }}</p>
+      <p><strong>Type:</strong> {{ seccion.type }}</p>
+      <p><strong>ID Padre:</strong> {{ seccion.idpadre }}</p>
+      <p><strong>Title:</strong> {{ seccion.title }}</p>
+      <p><strong>Content:</strong> {{ seccion.content }}</p>
+      <p><strong>Cuenta Mayor:</strong> {{ seccion.cuentaMayor }}</p>
+      <button (click)="editSeccion()" class="btn btn-warning">Edit</button>
+      <button (click)="deleteSeccion()" class="btn btn-danger">Delete</button>
+    </div>
+  </div>

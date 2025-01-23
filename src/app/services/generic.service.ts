@@ -31,11 +31,11 @@ export abstract class GenericService<T> {
     return this.itemSubject.getValue();
   }
 
-  getAll(subPath: string = ''): Observable<T[]> {
+  getAll(subPath: string = '', options = {}): Observable<T[]> {
     this.loadingSubject.next(true);
     const url = this.apiUrl + subPath;
     console.log('loading data..');
-    return this.http.get<ResponseBody<T[]>>(url)
+    return this.http.get<ResponseBody<T[]>>(url, options)
       .pipe(
         catchError(this.handleError<ResponseBody<T[]>>('getAll', {ENTITY: [], ESTADO: "NOK", MENSAJE: "Error en la solicitud"})),
         tap(value => {
@@ -47,10 +47,10 @@ export abstract class GenericService<T> {
       );
   }
 
-  get(subPath: string = ''): Observable<T> {
+  get(subPath: string = '', options = {}): Observable<T> {
     // const url = `${this.apiUrl}/${id}`;
     const url = this.apiUrl + subPath;
-    return this.http.get<ResponseBody<T>>(url)
+    return this.http.get<ResponseBody<T>>(url, options)
       .pipe(
         catchError(this.handleError<ResponseBody<T>>('get')),
         tap(value => {
@@ -60,9 +60,9 @@ export abstract class GenericService<T> {
       );
   }
 
-  create(item: T, subPath: string = ''): Observable<T> {
+  create(item: T, subPath: string = '', options = {}): Observable<T> {
     const url = this.apiUrl + subPath;
-    return this.http.post<ResponseBody<T>>(url, item)
+    return this.http.post<ResponseBody<T>>(url, item, options)
       .pipe(
         catchError(this.handleError<ResponseBody<T>>('create')),
         tap(value => {
@@ -72,10 +72,10 @@ export abstract class GenericService<T> {
       );
   }
 
-  update(item: T, subPath: string = ''): Observable<T> {
+  update(item: T, subPath: string = '', options = {}): Observable<T> {
     // const url = `${this.apiUrl}/${id}`;
     const url = this.apiUrl + subPath;
-    return this.http.put<ResponseBody<T>>(url, item)
+    return this.http.put<ResponseBody<T>>(url, item, options)
       .pipe(
         catchError(this.handleError<ResponseBody<T>>('update')),
         tap(value => {
@@ -85,10 +85,10 @@ export abstract class GenericService<T> {
       );
   }
 
-  delete(subPath: string = ''): Observable<T> {
+  delete(subPath: string = '', options = {}): Observable<T> {
     // const url = `${this.apiUrl}/${id}`;
     const url = this.apiUrl + subPath;
-    return this.http.delete<ResponseBody<T>>(url)
+    return this.http.delete<ResponseBody<T>>(url, options)
       .pipe(
         catchError(this.handleError<ResponseBody<T>>('delete')),
         tap(value => {

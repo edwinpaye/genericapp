@@ -1,0 +1,30 @@
+<div class="container">
+    <h2>{{ isEditMode ? 'Edit Seccion' : 'Add New Seccion' }}</h2>
+    <form [formGroup]="seccionForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="orden">Orden</label>
+        <input type="number" class="form-control" id="orden" formControlName="orden">
+      </div>
+      <div class="form-group">
+        <label for="type">Type</label>
+        <input type="number" class="form-control" id="type" formControlName="type">
+      </div>
+      <div class="form-group">
+        <label for="idpadre">ID Padre</label>
+        <input type="number" class="form-control" id="idpadre" formControlName="idpadre">
+      </div>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" formControlName="title">
+      </div>
+      <div class="form-group">
+        <label for="content">Content</label>
+        <textarea class="form-control" id="content" formControlName="content"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="cuentaMayor">Cuenta Mayor</label>
+        <input type="text" class="form-control" id="cuentaMayor" formControlName="cuentaMayor">
+      </div>
+      <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Update' : 'Create' }}</button>
+    </form>
+  </div>

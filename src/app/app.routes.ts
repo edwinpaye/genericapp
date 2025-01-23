@@ -31,16 +31,16 @@ export const routes: Routes = [
         loadComponent: () =>
             import('./step5/step5.component').then((m) => m.Step5Component),
     },
+    // {
+    //     path: 'secciones',
+    //     loadComponent: () =>
+    //         import('./components/seccion/seccion.component').then((m) => m.SeccionComponent),
+    // },
     {
         path: 'secciones',
-        loadComponent: () =>
-            import('./components/seccion/seccion.component').then((m) => m.SeccionComponent),
+        loadChildren: () =>
+            import('./components/seccion/seccion.routes').then((m) => m.routes),
     },
-    // {
-    //     path: 'dashboard',
-    //     loadChildren: () =>
-    //         import('./dashboard/dashboard.routes').then((m) => m.dashboardRoutes),
-    // },
     {
         path: '**',
         redirectTo: 'step1',
