@@ -1,14 +1,102 @@
 <div class="container">
-    <h2>Seccion Detail</h2>
-    <div *ngIf="seccion">
-      <p><strong>ID:</strong> {{ seccion.idseccion }}</p>
-      <p><strong>Orden:</strong> {{ seccion.orden }}</p>
-      <p><strong>Type:</strong> {{ seccion.type }}</p>
-      <p><strong>ID Padre:</strong> {{ seccion.idpadre }}</p>
-      <p><strong>Title:</strong> {{ seccion.title }}</p>
-      <p><strong>Content:</strong> {{ seccion.content }}</p>
-      <p><strong>Cuenta Mayor:</strong> {{ seccion.cuentaMayor }}</p>
-      <button (click)="editSeccion()" class="btn btn-warning">Edit</button>
-      <button (click)="deleteSeccion()" class="btn btn-danger">Delete</button>
-    </div>
+  <h2>Seccion Detail</h2>
+  <div *ngIf="seccion$ | async as seccion; else noData">
+    <p><strong>ID:</strong> {{ seccion.idseccion }} hi</p>
+    <p><strong>Orden:</strong> {{ seccion.orden }}</p>
+    <p><strong>Type:</strong> {{ seccion.type }}</p>
+    <p><strong>ID Padre:</strong> {{ seccion.idpadre }}</p>
+    <p><strong>Title:</strong> {{ seccion.title }}</p>
+    <p><strong>Content:</strong> {{ seccion.content }}</p>
+    <p><strong>Cuenta Mayor:</strong> {{ seccion.cuentaMayor }}</p>
+    <button (click)="editSeccion(seccion.idseccion)" class="btn btn-warning">Edit</button>
+    <button (click)="deleteSeccion(seccion.idseccion)" class="btn btn-danger">Delete</button>
   </div>
+  <ng-template #noData>No data available.</ng-template>
+</div>
+
+<!-- <div *ngIf="(isLoading$ | async)">Loading...</div> -->
+<!-- 
+<form [formGroup]="seccionForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="seccion$ | async as seccion">
+    <div>
+      <label for="idseccion">ID Seccion:</label>
+      <input id="idseccion" formControlName="idseccion" type="number">
+    </div>
+
+    <div>
+      <label for="orden">Orden:</label>
+      <input id="orden" formControlName="orden" type="number">
+    </div>
+
+    <div>
+      <label for="type">Type:</label>
+      <input id="type" formControlName="type" type="number">
+    </div>
+
+    <div>
+      <label for="idpadre">ID Padre:</label>
+      <input id="idpadre" formControlName="idpadre" type="number">
+    </div>
+
+    <div>
+      <label for="title">Title:</label>
+      <input id="title" formControlName="title" type="text">
+    </div>
+
+    <div>
+      <label for="content">Content:</label>
+      <textarea id="content" formControlName="content"></textarea>
+    </div>
+
+    <div>
+      <label for="cuentaMayor">Cuenta Mayor:</label>
+      <input id="cuentaMayor" formControlName="cuentaMayor" type="text">
+    </div>
+
+    <div formArrayName="subsecciones">
+      <div *ngFor="let subseccion of subsecciones.controls; let i = index" [formGroupName]="i">
+        <h3>Subseccion {{ i + 1 }}</h3>
+        <div>
+          <label for="idseccion-{{i}}">ID Seccion:</label>
+          <input id="idseccion-{{i}}" formControlName="idseccion" type="number">
+        </div>
+
+        <div>
+          <label for="orden-{{i}}">Orden:</label>
+          <input id="orden-{{i}}" formControlName="orden" type="number">
+        </div>
+
+        <div>
+          <label for="type-{{i}}">Type:</label>
+          <input id="type-{{i}}" formControlName="type" type="number">
+        </div>
+
+        <div>
+          <label for="idpadre-{{i}}">ID Padre:</label>
+          <input id="idpadre-{{i}}" formControlName="idpadre" type="number">
+        </div>
+
+        <div>
+          <label for="title-{{i}}">Title:</label>
+          <input id="title-{{i}}" formControlName="title" type="text">
+        </div>
+
+        <div>
+          <label for="content-{{i}}">Content:</label>
+          <textarea id="content-{{i}}" formControlName="content"></textarea>
+        </div>
+
+        <div>
+          <label for="cuentaMayor-{{i}}">Cuenta Mayor:</label>
+          <input id="cuentaMayor-{{i}}" formControlName="cuentaMayor" type="text">
+        </div>
+
+        <button type="button" (click)="removeSubseccion(i)">Remove Subseccion</button>
+      </div>
+    </div>
+
+    <button type="button" (click)="addSubseccion()">Add Subseccion</button>
+
+    <button type="submit">Submit</button>
+  </div>
+</form> -->

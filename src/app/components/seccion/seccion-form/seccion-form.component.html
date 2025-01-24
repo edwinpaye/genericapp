@@ -1,30 +1,87 @@
 <div class="container">
-    <h2>{{ isEditMode ? 'Edit Seccion' : 'Add New Seccion' }}</h2>
-    <form [formGroup]="seccionForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="orden">Orden</label>
-        <input type="number" class="form-control" id="orden" formControlName="orden">
+  <h2>{{ seccionId != 'new' ? 'Edit Seccion' : 'Add New Seccion' }}</h2>
+  <form [formGroup]="seccionForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="seccion$ | async as seccion">
+      <div>
+        <label for="idseccion">ID Seccion:</label>
+        <input id="idseccion" formControlName="idseccion" type="number">
       </div>
-      <div class="form-group">
-        <label for="type">Type</label>
-        <input type="number" class="form-control" id="type" formControlName="type">
+
+      <div>
+        <label for="orden">Orden:</label>
+        <input id="orden" formControlName="orden" type="number">
       </div>
-      <div class="form-group">
-        <label for="idpadre">ID Padre</label>
-        <input type="number" class="form-control" id="idpadre" formControlName="idpadre">
+
+      <div>
+        <label for="type">Type:</label>
+        <input id="type" formControlName="type" type="number">
       </div>
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" formControlName="title">
+
+      <div>
+        <label for="idpadre">ID Padre:</label>
+        <input id="idpadre" formControlName="idpadre" type="number">
       </div>
-      <div class="form-group">
-        <label for="content">Content</label>
-        <textarea class="form-control" id="content" formControlName="content"></textarea>
+
+      <div>
+        <label for="title">Title:</label>
+        <input id="title" formControlName="title" type="text">
       </div>
-      <div class="form-group">
-        <label for="cuentaMayor">Cuenta Mayor</label>
-        <input type="text" class="form-control" id="cuentaMayor" formControlName="cuentaMayor">
+
+      <div>
+        <label for="content">Content:</label>
+        <textarea id="content" formControlName="content"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Update' : 'Create' }}</button>
-    </form>
-  </div>
+
+      <div>
+        <label for="cuentaMayor">Cuenta Mayor:</label>
+        <input id="cuentaMayor" formControlName="cuentaMayor" type="text">
+      </div>
+
+      <div formArrayName="subsecciones">
+        <div *ngFor="let subseccion of subsecciones.controls; let i = index" [formGroupName]="i">
+          <h3>Subseccion {{ i + 1 }}</h3>
+          <div>
+            <label for="idseccion-{{i}}">ID Seccion:</label>
+            <input id="idseccion-{{i}}" formControlName="idseccion" type="number">
+          </div>
+
+          <div>
+            <label for="orden-{{i}}">Orden:</label>
+            <input id="orden-{{i}}" formControlName="orden" type="number">
+          </div>
+
+          <div>
+            <label for="type-{{i}}">Type:</label>
+            <input id="type-{{i}}" formControlName="type" type="number">
+          </div>
+
+          <div>
+            <label for="idpadre-{{i}}">ID Padre:</label>
+            <input id="idpadre-{{i}}" formControlName="idpadre" type="number">
+          </div>
+
+          <div>
+            <label for="title-{{i}}">Title:</label>
+            <input id="title-{{i}}" formControlName="title" type="text">
+          </div>
+
+          <div>
+            <label for="content-{{i}}">Content:</label>
+            <textarea id="content-{{i}}" formControlName="content"></textarea>
+          </div>
+
+          <div>
+            <label for="cuentaMayor-{{i}}">Cuenta Mayor:</label>
+            <input id="cuentaMayor-{{i}}" formControlName="cuentaMayor" type="text">
+          </div>
+
+          <button type="button" (click)="removeSubseccion(i)">Remove Subseccion</button>
+        </div>
+      </div>
+
+      <button type="button" (click)="addSubseccion()">Add Subseccion</button>
+
+      <button type="submit">Guardar</button>
+    </div>
+  </form>
+</div>

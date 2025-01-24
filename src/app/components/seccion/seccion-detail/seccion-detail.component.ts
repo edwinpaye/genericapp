@@ -7,6 +7,7 @@ import { Seccion } from '../../../models/seccion';
 import { CommonModule } from '@angular/common';
 import { SeccionFormServiceDirective } from '../../../directives/seccion-form-service.directive';
 import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-seccion-detail',
@@ -21,7 +22,8 @@ import { HttpParams } from '@angular/common/http';
   styleUrl: './seccion-detail.component.css'
 })
 export class SeccionDetailComponent implements OnInit {
-  seccion!: Seccion;
+  // seccion!: Seccion;
+  seccion$!: Observable<Seccion>;
 
   constructor(
     private seccionService: SeccionService,
@@ -32,20 +34,55 @@ export class SeccionDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     console.log(id);
-    let params = new HttpParams()
-          .set('id', id || 0);
-          // .set('pageSize', pageSize.toString());
-    this.seccionService.get('', { params }).subscribe(data => {
-      this.seccion = data;
-    });
+
+    if (id) {
+      let params = new HttpParams()
+          .set('id', id);
+      this.seccion$ = this.seccionService.getFromArray('', { params });
+      this.seccion$.subscribe(seccion => {
+        // this.populateForm(seccion);
+        // this.seccion = data;
+        console.log(seccion);
+      });
+    }
   }
 
-  editSeccion(): void {
-    this.router.navigate(['/secciones/edit'], { state: { seccion: this.seccion } });
+  // initializeForm(): void {
+  //   this.seccionForm = this.fb.group({
+  //     idseccion: ['', Validators.required],
+  //     orden: ['', Validators.required],
+  //     type: ['', Validators.required],
+  //     idpadre: [''],
+  //     title: ['', Validators.required],
+  //     content: ['', Validators.required],
+  //     subsecciones: this.fb.array([]),
+  //     cuentaMayor: ['']
+  //   });
+  // }
+
+  // populateForm(seccion: Seccion): void {
+  //   this.seccionForm.patchValue({
+  //     idseccion: seccion.idseccion,
+  //     orden: seccion.orden,
+  //     type: seccion.type,
+  //     idpadre: seccion.idpadre,
+  //     title: seccion.title,
+  //     content: seccion.content,
+  //     cuentaMayor: seccion.cuentaMayor
+  //   });
+
+  //   // Populate subsecciones if they exist
+  //   if (seccion.subsecciones && seccion.subsecciones.length > 0) {
+  //     seccion.subsecciones.forEach(subseccion => this.addSubseccion(subseccion));
+  //   }
+  // }
+
+  editSeccion(seccionid: number): void {
+    this.router.navigate(['/secciones/edit', seccionid], { state: { seccionid } });
   }
 
-  deleteSeccion(): void {
-    this.seccionService.delete(`${this.seccion.idseccion}`).subscribe(() => {
+  deleteSeccion(id: number): void {
+    this.seccionService.delete(`${id}`).subscribe(() => {
       this.router.navigate(['/secciones']);
     });
   }

@@ -6,13 +6,13 @@ export const routes: Routes = [
         path: '',
         component: SeccionListComponent
     },
+    // {
+    //     path: 'edit/new',
+    //     loadComponent: () =>
+    //         import('./seccion-form/seccion-form.component').then((m) => m.SeccionFormComponent),
+    // },
     {
-        path: 'new',
-        loadComponent: () =>
-            import('./seccion-form/seccion-form.component').then((m) => m.SeccionFormComponent),
-    },
-    {
-        path: 'edit',
+        path: 'edit/:id',
         loadComponent: () =>
             import('./seccion-form/seccion-form.component').then((m) => m.SeccionFormComponent),
     },

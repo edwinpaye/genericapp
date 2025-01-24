@@ -60,6 +60,19 @@ export abstract class GenericService<T> {
       );
   }
 
+  getFromArray(subPath: string = '', options = {}): Observable<T> {
+    // const url = `${this.apiUrl}/${id}`;
+    const url = this.apiUrl + subPath;
+    return this.http.get<ResponseBody<T[]>>(url, options)
+      .pipe(
+        catchError(this.handleError<ResponseBody<T[]>>('get')),
+        tap(value => {
+          console.log(value.ESTADO + ': ' + value.MENSAJE);
+        }),
+        map(res => res.ENTITY[0]),
+      );
+  }
+
   create(item: T, subPath: string = '', options = {}): Observable<T> {
     const url = this.apiUrl + subPath;
     return this.http.post<ResponseBody<T>>(url, item, options)
