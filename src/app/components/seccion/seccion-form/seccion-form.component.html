@@ -1,7 +1,8 @@
 <div class="container">
   <h2>{{ seccionId != 'new' ? 'Edit Seccion' : 'Add New Seccion' }}</h2>
   <form [formGroup]="seccionForm" (ngSubmit)="onSubmit()">
-    <div *ngIf="seccion$ | async as seccion; else loading">
+    <!-- <div *ngIf="!isEditMode || (seccion$ | async) as seccion; else loading"> -->
+    <div *ngIf="!isLoading; else loading">
       <div>
         <label for="idseccion">ID Seccion:</label>
         <input id="idseccion" formControlName="idseccion" type="number">

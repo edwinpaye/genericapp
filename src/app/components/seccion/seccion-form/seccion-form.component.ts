@@ -24,8 +24,9 @@ import { Observable, of } from 'rxjs';
 export class SeccionFormComponent implements OnInit {
   seccionForm!: FormGroup;
   isEditMode = false;
+  isLoading = false;
   seccionId!: string;
-  seccion$!: Observable<any>;
+  seccion$!: Observable<Seccion>;
 
   constructor(
     private fb: FormBuilder,
@@ -44,24 +45,24 @@ export class SeccionFormComponent implements OnInit {
     // }
 
     this.seccionId = this.route.snapshot.paramMap.get('id') || 'new';
-    console.log(this.seccionId);
     this.seccionForm = this.formGroup();
 
     if (this.seccionId != null && this.seccionId != 'new') {
+      this.isLoading = true;
       let params = new HttpParams()
           .set('id', this.seccionId);
-      this.seccion$ = this.seccionService.getFromArray('', { params });
+      this.seccion$ = this.seccionService.get('/buscar', { params });
       this.seccion$.subscribe(seccion => {
-        this.seccionForm.patchValue(seccion);
-        console.log(seccion);
+        this.seccionForm = this.formGroup(seccion);
+        seccion.subsecciones?.forEach(subseccion => this.subsecciones.push(this.formGroup(subseccion)));
+        this.isLoading = false;
       });
-    } else this.seccion$ = of(true);
+    } //else this.seccion$ = of(true);
   }
 
-  populateForm(seccion: Seccion): void {
-    if (seccion.subsecciones && seccion.subsecciones.length > 0) {
-      seccion.subsecciones.forEach(subseccion => this.subsecciones.push(subseccion));
-    }
+  loadSubsecciones(subsecciones: Seccion[]): void {
+    const subseccionesFormArray = this.seccionForm.get('subsecciones') as FormArray;
+    subsecciones.forEach(subseccion => subseccionesFormArray.push(this.formGroup(subseccion)));
   }
 
   onSubmit(): void {
@@ -95,7 +96,7 @@ export class SeccionFormComponent implements OnInit {
       idpadre: [subseccion?.idpadre || ''],
       title: [subseccion?.title || '', Validators.required],
       content: [subseccion?.content || '', Validators.required],
-      subsecciones: this.fb.array(subseccion?.subsecciones || []),
+      subsecciones: this.fb.array([]),
       cuentaMayor: [subseccion?.cuentaMayor || '']
     });
   }
