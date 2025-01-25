@@ -22,8 +22,9 @@ import { Observable } from 'rxjs';
   styleUrl: './seccion-detail.component.css'
 })
 export class SeccionDetailComponent implements OnInit {
-  // seccion!: Seccion;
+  seccion!: Seccion;
   seccion$!: Observable<Seccion>;
+  isLoading: boolean = false;
 
   constructor(
     private seccionService: SeccionService,
@@ -36,13 +37,15 @@ export class SeccionDetailComponent implements OnInit {
     console.log(id);
 
     if (id) {
+      this.isLoading = true;
       let params = new HttpParams()
           .set('id', id);
       this.seccion$ = this.seccionService.getFromArray('', { params });
       this.seccion$.subscribe(seccion => {
         // this.populateForm(seccion);
-        // this.seccion = data;
+        this.seccion = seccion;
         console.log(seccion);
+        this.isLoading = false;
       });
     }
   }

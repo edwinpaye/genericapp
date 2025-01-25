@@ -8,6 +8,7 @@
     z-index: 1000;
   }
   .notification {
+    --duration: 2.7s;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,7 +16,8 @@
     border-radius: 5px;
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    animation: fade-in 0.5s, fade-out 0.5s 2.5s;
+    /* animation: fade-in 0.5s, fade-out 0.5s 6.7s; */
+    animation: fade-in 0.5s, fade-out 0.5s var(--duration);
   }
   .notification.success {
     background-color: #4caf50;

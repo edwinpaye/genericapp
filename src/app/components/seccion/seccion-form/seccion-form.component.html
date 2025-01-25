@@ -1,7 +1,7 @@
 <div class="container">
   <h2>{{ seccionId != 'new' ? 'Edit Seccion' : 'Add New Seccion' }}</h2>
   <form [formGroup]="seccionForm" (ngSubmit)="onSubmit()">
-    <div *ngIf="seccion$ | async as seccion">
+    <div *ngIf="seccion$ | async as seccion; else loading">
       <div>
         <label for="idseccion">ID Seccion:</label>
         <input id="idseccion" formControlName="idseccion" type="number">
@@ -83,5 +83,6 @@
 
       <button type="submit">Guardar</button>
     </div>
+    <ng-template #loading>Cargando Informacion...</ng-template>
   </form>
 </div>

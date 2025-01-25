@@ -55,7 +55,7 @@ export class SeccionFormComponent implements OnInit {
         this.seccionForm.patchValue(seccion);
         console.log(seccion);
       });
-    } else this.seccion$ = of(null);
+    } else this.seccion$ = of(true);
   }
 
   populateForm(seccion: Seccion): void {

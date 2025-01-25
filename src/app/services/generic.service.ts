@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { NotificationService } from './notification.service';
 
 export interface ResponseBody<T> {
   ESTADO: string;
@@ -21,7 +22,7 @@ export abstract class GenericService<T> {
   items$ = this.itemSubject.asObservable();
   isLoading$ = this.loadingSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private notificator: NotificationService) { }
 
   setApiUrl(url: string): void {
     this.apiUrl = url;
@@ -114,6 +115,11 @@ export abstract class GenericService<T> {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(`${operation} failed: ${error.message}`);
+      this.notificator.addNotification({
+        type: 'error',
+        message: `${operation} failed: ${error.message}`,
+        ms: 7000,
+      });
       return of(result as T);
     };
   }
