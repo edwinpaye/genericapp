@@ -1,17 +1,24 @@
 <div class="container">
   <h2>Seccion Detail</h2>
-  <div *ngIf="seccion$ | async as seccion; else noData">
-    <p><strong>ID:</strong> {{ seccion.idseccion }} hi</p>
-    <p><strong>Orden:</strong> {{ seccion.orden }}</p>
-    <p><strong>Type:</strong> {{ seccion.type }}</p>
-    <p><strong>ID Padre:</strong> {{ seccion.idpadre }}</p>
-    <p><strong>Title:</strong> {{ seccion.title }}</p>
-    <p><strong>Content:</strong> {{ seccion.content }}</p>
-    <p><strong>Cuenta Mayor:</strong> {{ seccion.cuentaMayor }}</p>
-    <button (click)="editSeccion(seccion.idseccion)" class="btn btn-warning">Edit</button>
-    <button (click)="deleteSeccion(seccion.idseccion)" class="btn btn-danger">Delete</button>
+
+<!-- <ng-template *ngIf="!isLoading; else loading"> -->
+  <div *ngIf="!isLoading; else loading">
+    <div *ngIf="seccion$ | async as seccion; else noData">
+      <p><strong>ID:</strong> {{ seccion.idseccion }} hi</p>
+      <p><strong>Orden:</strong> {{ seccion.orden }}</p>
+      <p><strong>Type:</strong> {{ seccion.type }}</p>
+      <p><strong>ID Padre:</strong> {{ seccion.idpadre }}</p>
+      <p><strong>Title:</strong> {{ seccion.title }}</p>
+      <p><strong>Content:</strong> {{ seccion.content }}</p>
+      <p><strong>Cuenta Mayor:</strong> {{ seccion.cuentaMayor }}</p>
+      <button (click)="editSeccion(seccion.idseccion)" class="btn btn-warning">Edit</button>
+      <button (click)="deleteSeccion(seccion.idseccion)" class="btn btn-danger">Delete</button>
+    </div>
+    <ng-template #noData>No data available.</ng-template>
   </div>
-  <ng-template #noData>No data available.</ng-template>
+  <!-- </ng-template> -->
+  <ng-template #loading><div>Loading...</div></ng-template>
+
 </div>
 
 <!-- <div *ngIf="(isLoading$ | async)">Loading...</div> -->

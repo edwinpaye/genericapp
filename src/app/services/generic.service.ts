@@ -1,8 +1,8 @@
-// import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, finalize, map, tap } from 'rxjs/operators';
+import { catchError, finalize, map, take, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { NotificationService } from './notification.service';
 
 export interface ResponseBody<T> {
   ESTADO: string;
@@ -10,9 +10,6 @@ export interface ResponseBody<T> {
   ENTITY: T;
 }
 
-// @Injectable({
-//   providedIn: 'root'
-// })
 export abstract class GenericService<T> {
   private apiUrl: string = environment.apiUrl;
   private items: T[] = [];
@@ -21,7 +18,7 @@ export abstract class GenericService<T> {
   items$ = this.itemSubject.asObservable();
   isLoading$ = this.loadingSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private notificator: NotificationService) { }
 
   setApiUrl(url: string): void {
     this.apiUrl = url;
@@ -37,12 +34,13 @@ export abstract class GenericService<T> {
     console.log('loading data..');
     return this.http.get<ResponseBody<T[]>>(url, options)
       .pipe(
-        catchError(this.handleError<ResponseBody<T[]>>('getAll', {ENTITY: [], ESTADO: "NOK", MENSAJE: "Error en la solicitud"})),
         tap(value => {
           console.log(value.ESTADO + ': ' + value.MENSAJE);
           this.itemSubject.next(value.ENTITY);
         }),
+        catchError(this.handleError<ResponseBody<T[]>>('getAll', {ENTITY: [], ESTADO: "NOK", MENSAJE: "Error en la solicitud"})),
         map(res => res.ENTITY),
+        take(1),
         finalize(() => this.loadingSubject.next(false))
       );
   }
@@ -52,11 +50,12 @@ export abstract class GenericService<T> {
     const url = this.apiUrl + subPath;
     return this.http.get<ResponseBody<T>>(url, options)
       .pipe(
-        catchError(this.handleError<ResponseBody<T>>('get')),
         tap(value => {
           console.log(value.ESTADO + ': ' + value.MENSAJE);
         }),
+        catchError(this.handleError<ResponseBody<T>>('get')),
         map(res => res.ENTITY),
+        take(1),
       );
   }
 
@@ -65,11 +64,12 @@ export abstract class GenericService<T> {
     const url = this.apiUrl + subPath;
     return this.http.get<ResponseBody<T[]>>(url, options)
       .pipe(
-        catchError(this.handleError<ResponseBody<T[]>>('get')),
         tap(value => {
           console.log(value.ESTADO + ': ' + value.MENSAJE);
         }),
+        catchError(this.handleError<ResponseBody<T[]>>('get')),
         map(res => res.ENTITY[0]),
+        take(1),
       );
   }
 
@@ -77,11 +77,16 @@ export abstract class GenericService<T> {
     const url = this.apiUrl + subPath;
     return this.http.post<ResponseBody<T>>(url, item, options)
       .pipe(
-        catchError(this.handleError<ResponseBody<T>>('create')),
         tap(value => {
           console.log(value.ESTADO + ': ' + value.MENSAJE);
+          this.notificator.addNotification({
+            type: 'success',
+            message: 'Guardado Exitosamente!',
+          });
         }),
+        catchError(this.handleError<ResponseBody<T>>('create')),
         map(res => res.ENTITY),
+        take(1),
       );
   }
 
@@ -90,11 +95,16 @@ export abstract class GenericService<T> {
     const url = this.apiUrl + subPath;
     return this.http.put<ResponseBody<T>>(url, item, options)
       .pipe(
-        catchError(this.handleError<ResponseBody<T>>('update')),
         tap(value => {
           console.log(value.ESTADO + ': ' + value.MENSAJE);
+          this.notificator.addNotification({
+            type: 'success',
+            message: 'Actualizado Exitosamente!',
+          });
         }),
+        catchError(this.handleError<ResponseBody<T>>('update')),
         map(res => res.ENTITY),
+        take(1),
       );
   }
 
@@ -103,17 +113,28 @@ export abstract class GenericService<T> {
     const url = this.apiUrl + subPath;
     return this.http.delete<ResponseBody<T>>(url, options)
       .pipe(
-        catchError(this.handleError<ResponseBody<T>>('delete')),
         tap(value => {
           console.log(value.ESTADO + ': ' + value.MENSAJE);
+          this.notificator.addNotification({
+            type: 'success',
+            message: 'Eliminado Exitosamente!',
+          });
         }),
+        catchError(this.handleError<ResponseBody<T>>('delete')),
+        // tap(value => sendInfoToServer(value)),
         map(res => res.ENTITY),
+        take(1),
       );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(`${operation} failed: ${error.message}`);
+      this.notificator.addNotification({
+        type: 'error',
+        message: `Error en la solicitud. (${error.message})`,
+        ms: 7000,
+      });
       return of(result as T);
     };
   }
