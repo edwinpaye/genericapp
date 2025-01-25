@@ -45,7 +45,7 @@ export abstract class GenericService<T> {
       );
   }
 
-  get(subPath: string = '', options = {}): Observable<T> {
+  getOne(subPath: string = '', options = {}): Observable<T> {
     // const url = `${this.apiUrl}/${id}`;
     const url = this.apiUrl + subPath;
     return this.http.get<ResponseBody<T>>(url, options)

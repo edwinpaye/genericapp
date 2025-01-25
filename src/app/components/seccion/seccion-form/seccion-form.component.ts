@@ -46,16 +46,19 @@ export class SeccionFormComponent implements OnInit {
 
     this.seccionId = this.route.snapshot.paramMap.get('id') || 'new';
     this.seccionForm = this.formGroup();
+    console.log(this.seccionId);
 
     if (this.seccionId != null && this.seccionId != 'new') {
       this.isLoading = true;
       let params = new HttpParams()
           .set('id', this.seccionId);
-      this.seccion$ = this.seccionService.get('/buscar', { params });
-      this.seccion$.subscribe(seccion => {
-        this.seccionForm = this.formGroup(seccion);
-        seccion.subsecciones?.forEach(subseccion => this.subsecciones.push(this.formGroup(subseccion)));
-        this.isLoading = false;
+      this.seccion$ = this.seccionService.getOne('/buscar', { params });
+      this.seccion$.subscribe({
+        next: seccion => {
+          this.seccionForm = this.formGroup(seccion);
+          seccion.subsecciones?.forEach(subseccion => this.subsecciones.push(this.formGroup(subseccion)));
+        },
+        complete: () => {this.isLoading = false;},
       });
     } //else this.seccion$ = of(true);
   }
