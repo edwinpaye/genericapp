@@ -28,6 +28,10 @@ export abstract class GenericService<T> {
     return this.itemSubject.getValue();
   }
 
+  getLoadingState(): boolean {
+    return this.loadingSubject.getValue();
+  }
+
   getAll(subPath: string = '', options = {}): Observable<T[]> {
     this.loadingSubject.next(true);
     const url = this.apiUrl + subPath;

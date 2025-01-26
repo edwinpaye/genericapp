@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { SeccionService } from '../seccion.service';
-// import { Seccion } from '../models/seccion.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SeccionService } from '../../../services/seccion.service';
 import { Seccion } from '../../../models/seccion';
@@ -14,9 +12,7 @@ import { Observable } from 'rxjs';
   standalone: true,
   imports: [
       CommonModule,
-      // DynamicFormComponent,
       SeccionFormServiceDirective,
-      // DynamicTableComponent
     ],
   templateUrl: './seccion-detail.component.html',
   styleUrl: './seccion-detail.component.css'
@@ -34,51 +30,18 @@ export class SeccionDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    console.log(id);
 
     if (id) {
       this.isLoading = true;
       let params = new HttpParams()
           .set('id', id);
-      this.seccion$ = this.seccionService.getFromArray('', { params });
+      this.seccion$ = this.seccionService.getOne('/buscar', { params });
       this.seccion$.subscribe(seccion => {
-        // this.populateForm(seccion);
         this.seccion = seccion;
-        console.log(seccion);
         this.isLoading = false;
       });
     }
   }
-
-  // initializeForm(): void {
-  //   this.seccionForm = this.fb.group({
-  //     idseccion: ['', Validators.required],
-  //     orden: ['', Validators.required],
-  //     type: ['', Validators.required],
-  //     idpadre: [''],
-  //     title: ['', Validators.required],
-  //     content: ['', Validators.required],
-  //     subsecciones: this.fb.array([]),
-  //     cuentaMayor: ['']
-  //   });
-  // }
-
-  // populateForm(seccion: Seccion): void {
-  //   this.seccionForm.patchValue({
-  //     idseccion: seccion.idseccion,
-  //     orden: seccion.orden,
-  //     type: seccion.type,
-  //     idpadre: seccion.idpadre,
-  //     title: seccion.title,
-  //     content: seccion.content,
-  //     cuentaMayor: seccion.cuentaMayor
-  //   });
-
-  //   // Populate subsecciones if they exist
-  //   if (seccion.subsecciones && seccion.subsecciones.length > 0) {
-  //     seccion.subsecciones.forEach(subseccion => this.addSubseccion(subseccion));
-  //   }
-  // }
 
   editSeccion(seccionid: number): void {
     this.router.navigate(['/secciones/edit', seccionid], { state: { seccionid } });
@@ -89,4 +52,5 @@ export class SeccionDetailComponent implements OnInit {
       this.router.navigate(['/secciones']);
     });
   }
+
 }

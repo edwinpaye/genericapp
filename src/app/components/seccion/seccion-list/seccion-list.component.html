@@ -1,6 +1,7 @@
-<div class="container">
+<div class="table-container">
   <h2>Secciones</h2>
-  <button routerLink="/secciones/edit/new" class="btn btn-primary mb-3">Add New Seccion</button>
+  <button routerLink="/secciones/edit/new" class="btn btn-primary">Add New Seccion</button>
+  <button (click)="loadSecciones()" class="btn btn-secondary">Reload Seccions</button>
   <table class="table table-striped" *ngIf="!(seccionService.isLoading$ | async); else loading">
     <thead>
       <tr>
@@ -18,9 +19,9 @@
         <td>{{ seccion.orden }}</td>
         <td>{{ seccion.type }}</td>
         <td>
-          <button [routerLink]="['/secciones', seccion.idseccion]" class="btn btn-info btn-sm">View</button>
-          <button [routerLink]="['/secciones/edit', seccion.idseccion]" [state]="{ seccion: seccion }" class="btn btn-warning btn-sm">Edit</button>
-          <button (click)="deleteSeccion(seccion.idseccion)" class="btn btn-danger btn-sm">Delete</button>
+          <button [routerLink]="['/secciones', seccion.idseccion]" class="btn btn-info">View</button>
+          <button [routerLink]="['/secciones/edit', seccion.idseccion]" [state]="{ seccion: seccion }" class="btn btn-warning">Edit</button>
+          <button (click)="deleteSeccion(seccion.idseccion)" class="btn btn-danger">Delete</button>
         </td>
       </tr>
     </tbody>

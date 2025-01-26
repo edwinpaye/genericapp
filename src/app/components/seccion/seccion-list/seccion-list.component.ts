@@ -26,7 +26,13 @@ export class SeccionListComponent implements OnInit {
   constructor(public formService: SeccionFormService, public seccionService: SeccionService) {}
 
   ngOnInit(): void {
-    this.loadSecciones();
+    if (this.seccionService.getLoadingState()) {
+      this.seccionService.items$.subscribe({
+        next: secciones => this.secciones = secciones,
+      })
+    } else if (this.seccionService.getCurrentItems().length > 0) 
+      this.secciones = this.seccionService.getCurrentItems();
+    else this.loadSecciones();
   }
 
   loadSecciones(): void {
@@ -36,8 +42,9 @@ export class SeccionListComponent implements OnInit {
   }
 
   deleteSeccion(id: number): void {
-    this.seccionService.delete(`${id}`).subscribe(() => {
-      this.loadSecciones();
-    });
+    // this.seccionService.delete(`${id}`).subscribe(() => {
+    //   this.loadSecciones();
+    // });
   }
+
 }
