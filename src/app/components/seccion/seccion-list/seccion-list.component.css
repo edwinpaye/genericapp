@@ -54,9 +54,14 @@ button:hover {
 
 /* Secondary button */
 .btn-secondary {
+    box-sizing: border-box;
     background-color: transparent;
     border: 2px solid white;
     color: white;
+}
+.btn-secondary:hover {
+    /* box-sizing: border-box; */
+    border: 2px solid transparent;
 }
 
 /* Edit button */

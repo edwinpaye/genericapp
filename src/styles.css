@@ -4,13 +4,68 @@ body {
     padding: 0;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 /* Light Theme Variables */
-:root {
+/* :root {
     --background-color: white;
     --text-color: black;
     --primary-color: #1976d2;
-}
+} */
+
+:root {
+    /* Color Palette */
+    --primary-color: #007bff;
+    --primary-color-dark: #0056b3;
+    --secondary-color: #6c757d;
+    --secondary-color-dark: #495057;
+    --success-color: #28a745;
+    --success-color-dark: #1e7e34;
+    --danger-color: #dc3545;
+    --danger-color-dark: #c82333;
+    --warning-color: #ffc107;
+    --warning-color-dark: #e0a800;
+    --info-color: #17a2b8;
+    --info-color-dark: #117a8b;
   
+    --light-color: #f8f9fa;
+    --light-color-dark: #e9ecef;
+    --dark-color: #343a40;
+    --dark-color-light: #495057;
+    --text-color: #333;
+    --text-color-light: #666;
+    --background-color: #fff;
+  
+    /* Spacing and Sizes */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+  
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+  
+    --border-radius: 4px;
+    --border-width: 1px;
+  
+    /* Button Specific */
+    --button-padding-y: 0.5rem;
+    --button-padding-x: 1rem;
+    --button-font-size: var(--font-size-md);
+  
+    /* Z-Index */
+    --z-index-modal: 1000;
+  
+    /* Transitions */
+    --transition-duration: 0.3s;
+    --transition-timing-function: ease-in-out;
+}
+
 /* Dark Theme Variables */
 [data-theme='dark'] {
     --background-color: #121212;
