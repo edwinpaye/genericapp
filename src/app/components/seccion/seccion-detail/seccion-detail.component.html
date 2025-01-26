@@ -1,32 +1,86 @@
-<div class="container">
+<div class="detail-container">
   <h2>Seccion Detail</h2>
 
   <div *ngIf="!isLoading; else loading">
-    <div *ngIf="seccion$ | async as seccion; else noData">
-      <p><strong>ID:</strong> {{ seccion.idseccion }} </p>
+    <div *ngIf="seccion$ | async as seccion; else noData" class="detail-content">
+      
+      <div class="detail-item">
+        <span class="detail-label">ID:</span>
+        <span class="detail-value">{{ seccion.idseccion }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Orden:</span>
+        <span class="detail-value">{{ seccion.orden }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Type:</span>
+        <span class="detail-value">{{ seccion.type }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">ID Padre:</span>
+        <span class="detail-value">{{ seccion.idpadre }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Title:</span>
+        <span class="detail-value">{{ seccion.title }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Content:</span>
+        <span class="detail-value">{{ seccion.content }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Cuenta Mayor:</span>
+        <span class="detail-value">{{ seccion.cuentaMayor }}</span>
+      </div>
+      <!-- <p><strong>ID:</strong> {{ seccion.idseccion }} </p>
       <p><strong>Orden:</strong> {{ seccion.orden }}</p>
       <p><strong>Type:</strong> {{ seccion.type }}</p>
       <p><strong>ID Padre:</strong> {{ seccion.idpadre }}</p>
       <p><strong>Title:</strong> {{ seccion.title }}</p>
       <p><strong>Content:</strong> {{ seccion.content }}</p>
-      <p><strong>Cuenta Mayor:</strong> {{ seccion.cuentaMayor }}</p>
+      <p><strong>Cuenta Mayor:</strong> {{ seccion.cuentaMayor }}</p> -->
 
       <div *ngFor="let subseccion of seccion.subsecciones; let i = index">
         <h3>Subseccion {{ i + 1 }}</h3>
-        <p><strong>ID:</strong> {{ subseccion.idseccion }} </p>
-        <p><strong>Orden:</strong> {{ subseccion.orden }}</p>
-        <p><strong>Type:</strong> {{ subseccion.type }}</p>
-        <p><strong>ID Padre:</strong> {{ subseccion.idpadre }}</p>
-        <p><strong>Title:</strong> {{ subseccion.title }}</p>
-        <p><strong>Content:</strong> {{ subseccion.content }}</p>
-        <p><strong>Cuenta Mayor:</strong> {{ subseccion.cuentaMayor }}</p>
+        <div class="detail-item">
+          <span class="detail-label">ID:</span>
+          <span class="detail-value">{{ subseccion.idseccion }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Orden:</span>
+          <span class="detail-value">{{ subseccion.orden }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Type:</span>
+          <span class="detail-value">{{ subseccion.type }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">ID Padre:</span>
+          <span class="detail-value">{{ subseccion.idpadre }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Title:</span>
+          <span class="detail-value">{{ subseccion.title }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Content:</span>
+          <span class="detail-value">{{ subseccion.content }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Cuenta Mayor:</span>
+          <span class="detail-value">{{ subseccion.cuentaMayor }}</span>
+        </div>
       </div>
 
-      <button (click)="editSeccion(seccion.idseccion)" class="btn btn-warning">Edit</button>
-      <button (click)="deleteSeccion(seccion.idseccion)" class="btn btn-danger">Delete</button>
+      <div class="actions">
+        <button (click)="editSeccion(seccion.idseccion)" class="btn-warning">Edit</button>
+        <button (click)="deleteSeccion(seccion.idseccion)" class="btn-danger">Delete</button>
+        <button class="btn-primary">Back</button>
+      </div>
     </div>
-    <ng-template #noData>No data available.</ng-template>
-  </div>
-  <ng-template #loading><div>Loading...</div></ng-template>
 
+    <ng-template #noData><div class="no-data">No data available.</div></ng-template>
+  </div>
+
+  <ng-template #loading><h3>Loading...</h3></ng-template>
 </div>

@@ -42,46 +42,6 @@ button {
     font-size: 14px;
 }
 
-button:hover {
-    opacity: 0.8;
-}
-
-/* Primary button */
-.btn-primary {
-    background-color: #007bff;
-    color: white;
-}
-
-/* Secondary button */
-.btn-secondary {
-    box-sizing: border-box;
-    background-color: transparent;
-    border: 2px solid white;
-    color: white;
-}
-.btn-secondary:hover {
-    /* box-sizing: border-box; */
-    border: 2px solid transparent;
-}
-
-/* Edit button */
-.btn-warning {
-    background-color: #ffc107;
-    color: black;
-}
-
-/* Delete button */
-.btn-danger {
-    background-color: #dc3545;
-    color: white;
-}
-
-/* Details button */
-.btn-info {
-    background-color: #28a745;
-    color: white;
-}
-
 /* Responsive Design */
 @media (max-width: 600px) {
     .table-container {

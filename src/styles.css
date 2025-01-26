@@ -9,12 +9,6 @@ body {
 }
 
 /* Light Theme Variables */
-/* :root {
-    --background-color: white;
-    --text-color: black;
-    --primary-color: #1976d2;
-} */
-
 :root {
     /* Color Palette */
     --primary-color: #007bff;
@@ -79,6 +73,96 @@ body {
     color: var(--text-color);
 } */
 
-/* button {
+/* Primary button */
+.btn-primary {
     background-color: var(--primary-color);
+    color: var(--light-color);
+}
+.btn-primary:hover {
+    background-color: var(--primary-color-dark);
+}
+
+/* Secondary button */
+.btn-secondary {
+    /* box-sizing: border-box; */
+    background-color: var(--secondary-color);
+    /* border: 2px solid white; */
+    color: var(--light-color);
+}
+.btn-secondary:hover {
+    /* border: 2px solid transparent; */
+    background-color: var(--secondary-color-dark);
+}
+
+/* Edit button */
+.btn-warning {
+    background-color: var(--warning-color);
+    color: var(--dark-color);
+}
+.btn-warning:hover {
+    background-color: var(--warning-color-dark);
+}
+
+/* Delete button */
+.btn-danger {
+    background-color: var(--danger-color);
+    color: var(--light-color);
+}
+.btn-danger:hover {
+    background-color: var(--danger-color-dark);
+}
+
+/* Details button */
+.btn-info {
+    background-color: var(--success-color);
+    color: var(--light-color);
+}
+.btn-info:hover {
+    background-color: var(--success-color-dark);
+}
+
+/* .my-button {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    padding: var(--button-padding-y) var(--button-padding-x);
+    font-size: var(--button-font-size);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-duration) var(--transition-timing-function);
+}
+
+.my-button:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.my-heading {
+    font-size: var(--font-size-xl);
+    color: var(--text-color);
+    margin-bottom: var(--spacing-lg)
+}
+
+.my-paragraph {
+    font-size: var(--font-size-md);
+    color: var(--text-color-light);
+    margin-bottom: var(--spacing-md);
+}
+
+.card {
+    background-color: var(--light-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+}
+
+.modal-overlay {
+    background-color: rgba(0,0,0, 0.5);
+    position: fixed;
+    z-index: var(--z-index-modal);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 } */

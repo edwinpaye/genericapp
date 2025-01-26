@@ -1,39 +1,49 @@
-<div class="container">
+<div class="form-container">
   <h2>{{ seccionId != 'new' ? 'Edit Seccion' : 'Add New Seccion' }}</h2>
   <form [formGroup]="seccionForm" (ngSubmit)="onSubmit()">
     <!-- <div *ngIf="!isEditMode || (seccion$ | async) as seccion; else loading"> -->
     <div *ngIf="!isLoading; else loading">
-      <div>
+      <div class="form-group">
         <label for="idseccion">ID Seccion:</label>
         <input id="idseccion" formControlName="idseccion" type="number">
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="orden">Orden:</label>
         <input id="orden" formControlName="orden" type="number">
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="type">Type:</label>
         <input id="type" formControlName="type" type="number">
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="idpadre">ID Padre:</label>
         <input id="idpadre" formControlName="idpadre" type="number">
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="title">Title:</label>
-        <input id="title" formControlName="title" type="text">
+        <!-- <input id="title" formControlName="title" type="text"> -->
+        <textarea
+          id="title"
+          formControlName="title"
+          placeholder="Contenido del titulo..."
+        ></textarea>
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="content">Content:</label>
-        <textarea id="content" formControlName="content"></textarea>
+        <!-- <textarea id="content" formControlName="content"></textarea> -->
+        <textarea
+          id="content"
+          formControlName="content"
+          placeholder="Contenido del parrafo..."
+        ></textarea>
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="cuentaMayor">Cuenta Mayor:</label>
         <input id="cuentaMayor" formControlName="cuentaMayor" type="text">
       </div>
@@ -41,49 +51,71 @@
       <div formArrayName="subsecciones">
         <div *ngFor="let subseccion of subsecciones.controls; let i = index" [formGroupName]="i">
           <h3>Subseccion {{ i + 1 }}</h3>
-          <div>
+          <div class="form-group">
             <label for="idseccion-{{i}}">ID Seccion:</label>
             <input id="idseccion-{{i}}" formControlName="idseccion" type="number">
           </div>
 
-          <div>
+          <div class="form-group">
             <label for="orden-{{i}}">Orden:</label>
             <input id="orden-{{i}}" formControlName="orden" type="number">
           </div>
 
-          <div>
+          <div class="form-group">
             <label for="type-{{i}}">Type:</label>
             <input id="type-{{i}}" formControlName="type" type="number">
           </div>
 
-          <div>
+          <div class="form-group">
             <label for="idpadre-{{i}}">ID Padre:</label>
             <input id="idpadre-{{i}}" formControlName="idpadre" type="number">
           </div>
 
-          <div>
+          <div class="form-group">
             <label for="title-{{i}}">Title:</label>
-            <input id="title-{{i}}" formControlName="title" type="text">
+            <!-- <input id="title-{{i}}" formControlName="title" type="text"> -->
+            <textarea
+              id="content-{{i}}"
+              formControlName="title"
+              placeholder="Contenido del titulo..."
+            ></textarea>
           </div>
 
-          <div>
+          <div class="form-group">
             <label for="content-{{i}}">Content:</label>
-            <textarea id="content-{{i}}" formControlName="content"></textarea>
+            <textarea
+              id="content-{{i}}"
+              formControlName="content"
+              placeholder="Contenido del parrafo..."
+            ></textarea>
           </div>
 
-          <div>
+          <div class="form-group">
             <label for="cuentaMayor-{{i}}">Cuenta Mayor:</label>
             <input id="cuentaMayor-{{i}}" formControlName="cuentaMayor" type="text">
           </div>
 
-          <button type="button" (click)="removeSubseccion(i)">Remove Subseccion</button>
+          <button class="btn-danger" type="button" (click)="removeSubseccion(i)">Remove Subseccion</button>
         </div>
       </div>
 
-      <button type="button" (click)="addSubseccion()">Add Subseccion</button>
+      <div class="form-actions">
+        <!-- <button type="button" (click)="onReset()">Reset</button> -->
+        <button class="btn-primary" type="button" (click)="addSubseccion()">Add Subseccion</button>
 
-      <button type="submit">Guardar</button>
+        <button class="btn-info" type="submit">Guardar</button>
+      </div>
     </div>
-    <ng-template #loading>Cargando Informacion...</ng-template>
+    <ng-template #loading><h3>Cargando Informacion...</h3></ng-template>
   </form>
 </div>
+
+    <!-- <div class="form-group">
+      <label for="role">Role</label>
+      <select id="role" name="role" [(ngModel)]="user.role" required>
+        <option value="">Select a role</option>
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
+        <option value="Editor">Editor</option>
+      </select>
+    </div> -->
