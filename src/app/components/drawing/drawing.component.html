@@ -1,0 +1,9 @@
+<div class="drawing-container">
+    <canvas #canvas width="800" height="600" class="drawing-canvas"></canvas>
+    <div class="controls">
+      <input type="file" (change)="onBackgroundImageUpload($event)" accept="image/*" />
+      <button (click)="clearCanvas()">Clear</button>
+      <button (click)="toggleEraser()">Toggle Eraser</button>
+    </div>
+  </div>
+  

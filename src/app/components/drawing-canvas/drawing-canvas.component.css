@@ -1,0 +1,57 @@
+
+.drawing-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Adjust as needed */
+    height: 100%; /* Adjust as needed */
+  }
+  
+  .toolbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  canvas {
+    border: 1px solid #000;
+    flex-grow: 1;  /* Take up remaining space */
+    /* cursor: crosshair; */
+    background-color: transparent; /* Important:  Ensures that transparent PNGs on the background are displayed correctly */
+    background-image: url('/assets/bodyHuman.png');
+  }
+  
+  .toolbar button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+  }
+  
+  .toolbar button.active {
+    background-color: #bbb;
+  }
+  
+  .toolbar input[type="color"],
+  .toolbar input[type="number"] {
+    margin: 0 5px;
+    padding: 3px;
+  }
+  
+  /* Style the file input to look like a button */
+  .toolbar input[type="file"] {
+      width: 0px;
+      height: 0px;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+  }
+  
+  .toolbar label[for="imageUpload"] {
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #ddd;
+      cursor: pointer;
+  }

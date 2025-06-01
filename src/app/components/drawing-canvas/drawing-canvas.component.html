@@ -1,0 +1,41 @@
+<div class="drawing-container">
+
+    <div class="toolbar">
+
+        <button (click)="setDrawingMode(DrawingMode.DRAW)" [class.active]="currentMode === DrawingMode.DRAW">Draw</button>
+        <button (click)="setDrawingMode(DrawingMode.ERASE)" [class.active]="currentMode === DrawingMode.ERASE">Erase</button>
+
+        <label for="colorPicker">Color:</label>
+        <input type="color" id="colorPicker" [(ngModel)]="currentColor" [disabled]="currentMode === DrawingMode.ERASE">
+
+        <label for="lineWidth" *ngIf="currentMode !== DrawingMode.ERASE">Line Width:</label>
+        <input type="number" id="lineWidth" [(ngModel)]="currentLineWidth" min="1" max="20" *ngIf="currentMode !== DrawingMode.ERASE">
+
+        <label for="eraserWidth" *ngIf="currentMode === DrawingMode.ERASE">Eraser Width:</label>
+        <input type="number" id="eraserWidth" [(ngModel)]="eraserWidth" min="5" max="50" *ngIf="currentMode === DrawingMode.ERASE">
+
+        <!--  <button (click)="toggleEraser()">{{ isErasing ? 'Disable Eraser' : 'Enable Eraser' }}</button>-->
+        <button (click)="undo()" [disabled]="undoStack.length <= 1">Undo</button>
+        <button (click)="redo()" [disabled]="redoStack.length === 0">Redo</button>
+        <button (click)="clearDrawing()">Clear</button>
+        <button (click)="downloadImage()">Download</button>
+
+        <div>
+            <label for="imageUpload">Import Image:</label>
+            <input type="file" id="imageUpload" accept="image/*" (change)="handleImageUpload($event)">
+            <button *ngIf="backgroundImage" (click)="removeBackgroundImage()">Remove Background</button>
+        </div>
+
+    </div>
+
+    <canvas
+        #canvas
+        (mousedown)="startDrawing($event)"
+        (mousemove)="draw($event)"
+        (mouseup)="endDrawing()"
+        (mouseleave)="endDrawing()"
+        (touchstart)="startDrawing($event)"
+        (touchmove)="draw($event)"
+        (touchend)="endDrawing()"
+    ></canvas>
+</div>

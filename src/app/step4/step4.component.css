@@ -1,0 +1,31 @@
+.canvas-container {
+    position: relative; /* Crucial: Establishes a positioning context */
+    width: 500px;  /* Or desired width */
+    height: 300px; /* Or desired height */
+}
+
+app-drawing-canvas {
+    /* position: absolute; Positions the background behind the canvas */
+    /* top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; */
+    /* z-index: -1; Positions it behind the canvas */
+  
+    /* Example background styles - replace with your desired background */
+    /* background-image: linear-gradient(to bottom, #3498db, #2980b9); Gradient */
+    /* Or: */
+    /* background-color: #f0f0f0; */
+    /* Or: */
+    background-image: url('/assets/bodyHuman.png');
+    /* background-repeat: repeat; */
+    /* Or: Include HTML elements to make the background, then use the same width/height as the canvas */
+}
+  
+#myCanvas {
+    position: relative; /* Places the canvas on top of the background */
+    z-index: 0;   /* Ensure the canvas is above the background */
+    display: block; /* important to remove default canvas spacing */
+    width: 100%;
+    height: 100%;
+}

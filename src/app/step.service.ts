@@ -21,12 +21,12 @@ export interface StepItem {
 })
 export class StepService {
   private steps: StepItem[] = [
-    { id: 0, title: "Step 1", path: "/step1" },
-    { id: 1, title: "Step 2", path: "/step2" },
-    { id: 2, title: "Step 3", path: "/step3" },
+    // { id: 0, title: "Step 1", path: "/step1" },
+    // { id: 1, title: "Step 2", path: "/step2" },
+    // { id: 2, title: "Step 3", path: "/step3" },
     { id: 3, title: "Step 4", path: "/step4" },
-    { id: 4, title: "Step 5", path: "/step5" },
-    { id: 5, title: "Secciones", path: "/secciones" },
+    // { id: 4, title: "Step 5", path: "/step5" },
+    // { id: 5, title: "Secciones", path: "/secciones" },
   ]
   // private selectedStepsList: StepItem[] = [this.steps[0]];
   private selectedStepsList: StepItem[] = [];
