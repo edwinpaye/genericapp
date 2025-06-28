@@ -31,6 +31,7 @@
   /* margin: 20px; */
   /* border:1px solid #777; */
   min-height: 100svh;
+  box-sizing: border-box;
 }
 
 .sidebar {

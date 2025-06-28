@@ -6,10 +6,11 @@
     height: 70px;
     width: 100%;
     gap: 10px;
+    box-sizing: border-box;
 }
 
 .toolbar-content {
-    
+    margin: auto 10px;
 }
 
 .animated-button {
