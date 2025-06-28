@@ -1,0 +1,81 @@
+<div class="container">
+    <h2>Angular Image Editor</h2>
+
+    <div class="input-group">
+        <div class="input-item">
+            <label for="imageUpload">Select Image:</label>
+            <input type="file" id="imageUpload" (change)="onFileSelected($event)" accept="image/*">
+        </div>
+        <div class="input-item">
+            <label for="pdfUpload">Select PDF:</label>
+            <input type="file" id="pdfUpload" (change)="onPdfFileSelected($event)" accept="application/pdf">
+        </div>
+    </div>
+
+    <div *ngIf="originalImageSrc" class="image-previews">
+        <div style="position: relative;">
+            <img
+                [src]="originalImageSrc"
+                alt="Original Image"
+                #originalImagePreview
+                (load)="onOriginalImageLoad()"
+                (mousedown)="startDrag($event)"
+                [style.cursor]="showCropVisualizer ? 'crosshair' : 'default'"
+                style="max-width: 300px; max-height: 300px; user-select: none;"
+            >
+            <div *ngIf="showCropVisualizer && originalImagePreview.offsetWidth > 0 && cropVisualizerStyle.width > 0 && cropVisualizerStyle.height > 0"
+                class="crop-visualizer"
+                [style.left.px]="cropVisualizerStyle.left"
+                [style.top.px]="cropVisualizerStyle.top"
+                [style.width.px]="cropVisualizerStyle.width"
+                [style.height.px]="cropVisualizerStyle.height">
+            </div>
+            <h3>Original Image (Drag to select crop area)</h3>
+        </div>
+        <div *ngIf="processedImageURL">
+            <img [src]="processedImageURL" alt="Processed Image" style="max-width: 300px; max-height: 300px;">
+            <h3>Processed Image Preview</h3>
+        </div>
+    </div>
+
+    <canvas #imageCanvas style="display: none;"></canvas>
+
+    <div *ngIf="originalImageSrc" class="controls">
+        <fieldset>
+            <legend>Crop (values are for original image)</legend>
+            <div>
+                <label>X: <input type="number" [(ngModel)]="cropConfig.x" (input)="updateAndPreview()"></label>
+                <label>Y: <input type="number" [(ngModel)]="cropConfig.y" (input)="updateAndPreview()"></label>
+            </div>
+            <div>
+                <label>Width: <input type="number" [(ngModel)]="cropConfig.width" (input)="updateAndPreview()"></label>
+                <label>Height: <input type="number" [(ngModel)]="cropConfig.height" (input)="updateAndPreview()"></label>
+            </div>
+            <button (click)="applyCropAndFilter()">Apply Crop & Filter to Generate Blob</button>
+        </fieldset>
+
+        <!-- ... (rest of the controls: Filter, Output Format, Upload Button remain the same) ... -->
+        <fieldset>
+        <legend>Filter</legend>
+        <label>
+            <input type="checkbox" [(ngModel)]="applyGrayscaleFilter" (change)="updateAndPreview()"> Apply Grayscale
+        </label>
+        </fieldset>
+
+        <fieldset>
+        <legend>Output Format</legend>
+        <select [(ngModel)]="outputFormat" (change)="updateAndPreview()">
+            <option value="image/png">PNG</option>
+            <option value="image/jpeg">JPEG</option>
+            <option value="image/webp">WEBP</option>
+        </select>
+        <label *ngIf="outputFormat === 'image/jpeg'">
+            JPEG Quality (0.1 - 1.0):
+            <input type="number" [(ngModel)]="jpegQuality" min="0.1" max="1" step="0.01" (input)="updateAndPreview()">
+        </label>
+        </fieldset>
+
+        <button (click)="uploadImage()" [disabled]="!processedImageBlob">Upload Processed Image</button>
+        <p *ngIf="uploadMessage" class="scrollbar">{{ uploadMessage }}</p>
+    </div>
+</div>
